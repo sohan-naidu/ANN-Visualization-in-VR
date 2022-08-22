@@ -33,7 +33,7 @@ public class NeuronInstantiator : MonoBehaviour
             }
         }
         // Debug.Log(layersToBeDrawn);
-        Vector3 startPosition = new Vector3(0.0f, 1.0f, 10.0f);
+        Vector3 startPosition = new Vector3(-4.0f, 1.0f, 10.0f);
         Vector3 currentPosition = startPosition;
         // spawn it at an offset
         float maxDrawSpaceHeight = 10.0f;
@@ -65,7 +65,7 @@ public class NeuronInstantiator : MonoBehaviour
                 currentPosition.y += jump;
             }
             index++;
-            currentPosition.x += 2.0f;
+            currentPosition.x += 5.0f;
         }
 
         for (int i = 0; i < sphereReferences.Count - 1; i++)
@@ -92,8 +92,8 @@ public class NeuronInstantiator : MonoBehaviour
                 for (int k = 0; k < sphereCenters[i + 1].Count; k++)
                 {
                     LineRenderer lineRenderer = emptyGameObjects[i][j][k].GetComponent<LineRenderer>();
-                    lineRenderer.startWidth = 0.1f;
-                    lineRenderer.endWidth = 0.1f;
+                    lineRenderer.startWidth = 0.05f;
+                    lineRenderer.endWidth = 0.05f;
                     Vector3 sphereCenter = sphereCenters[i + 1][k];
                     Vector3[] points = new Vector3[2];
                     points[0] = firstCenter;
