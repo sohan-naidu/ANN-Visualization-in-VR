@@ -33,10 +33,10 @@ public class NeuronInstantiator : MonoBehaviour
             }
         }
         // Debug.Log(layersToBeDrawn);
-        Vector3 startPosition = new Vector3(-4.0f, 1.0f, 10.0f);
+        Vector3 startPosition = new Vector3(-2.5f, 0.25f, 2.25f);
         Vector3 currentPosition = startPosition;
         // spawn it at an offset
-        float maxDrawSpaceHeight = 10.0f;
+        float maxDrawSpaceHeight = 5.0f;
         List<List<Vector3>> sphereCenters = new List<List<Vector3>>();
         int index = 0;
         // each sphere should spawn its own line renderer
@@ -49,8 +49,8 @@ public class NeuronInstantiator : MonoBehaviour
             sphereReferences.Add(new List<GameObject>());
             emptyGameObjects.Add(new List<List<GameObject>>());
             float currentDrawSpaceHeight = maxDrawSpaceHeight;
-            float drawSpaceCenter = 6.0f;
-            if (size < 5) currentDrawSpaceHeight = 5.0f;
+            float drawSpaceCenter = maxDrawSpaceHeight / 2.0f + startPosition.y;
+            if (size < 5) currentDrawSpaceHeight /= 2.0f;
             float jump = (float) currentDrawSpaceHeight / size;
             int toTheSide = size / 2;
             currentPosition.y = drawSpaceCenter - (toTheSide * jump);
@@ -65,7 +65,7 @@ public class NeuronInstantiator : MonoBehaviour
                 currentPosition.y += jump;
             }
             index++;
-            currentPosition.x += 5.0f;
+            currentPosition.x += 3.0f;
         }
 
         for (int i = 0; i < sphereReferences.Count - 1; i++)
@@ -92,8 +92,8 @@ public class NeuronInstantiator : MonoBehaviour
                 for (int k = 0; k < sphereCenters[i + 1].Count; k++)
                 {
                     LineRenderer lineRenderer = emptyGameObjects[i][j][k].GetComponent<LineRenderer>();
-                    lineRenderer.startWidth = 0.05f;
-                    lineRenderer.endWidth = 0.05f;
+                    lineRenderer.startWidth = 0.02f;
+                    lineRenderer.endWidth = 0.02f;
                     Vector3 sphereCenter = sphereCenters[i + 1][k];
                     Vector3[] points = new Vector3[2];
                     points[0] = firstCenter;
