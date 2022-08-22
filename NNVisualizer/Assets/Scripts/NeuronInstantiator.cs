@@ -18,12 +18,19 @@ public class NeuronInstantiator : MonoBehaviour
     {
         model = ModelLoader.Load(testModel);
         worker = WorkerFactory.CreateWorker(WorkerFactory.Type.Auto, model);
-        // Debug.Log(model.Inputs);
-        // print(model.inputs);
+        float[] w = model.layers[3].weights;
+        var tempvariable = model.layers[3].datasets[0]; // 35!!!
+        Debug.Log(tempvariable);
+        List<int> layersToBeDrawn = new List<int>();
+        List<Layer> allLayers = model.layers;
+        Tensor tensorThree = allLayers[6].DataSetToTensor(0);
+        w = tensorThree.data.Download(tensorThree.shape);
+        Debug.Log(w);
+
         // it's present in: model.layers[3].datasets[0].shape.flatHeight, model.layers[3].datasets[0].shape.flatWidth.
         // the first three layers are present to load the model????
         // get the details of the balls asap
-        List<int> layersToBeDrawn = new List<int>();
+        // List<List<float>> weights = new List<List<float>>();
         foreach (var layer in model.layers)
         {
             if (layer.type == Unity.Barracuda.Layer.Type.Dense)
@@ -103,7 +110,7 @@ public class NeuronInstantiator : MonoBehaviour
             }
         }
         // requires an array of transforms
-        //lineController.SetUpLine(points);
+        // lineController.SetUpLine(points);
     }
 
     // Update is called once per frame
