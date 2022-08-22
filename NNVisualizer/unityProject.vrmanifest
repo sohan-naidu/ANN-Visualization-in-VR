@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.capstoneimplementationmain.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\My_Files\\Dev\\Unity_Repos\\Capstone Implementation Main\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "Capstone Implementation Main [Testing]"
+        }
+      }
+    }
+  ]
+}
