@@ -731,6 +731,7 @@ MonoBehaviour:
     type: 3}
   neuronPrefab: {fileID: 3364334951021942074, guid: 195e66f4107640949a7bb755813ec637,
     type: 3}
+  material: {fileID: 2100000, guid: 9b01d7c0e4dfa854eb5dfe2624e27c0f, type: 2}
 --- !u!4 &72249391
 Transform:
   m_ObjectHideFlags: 0

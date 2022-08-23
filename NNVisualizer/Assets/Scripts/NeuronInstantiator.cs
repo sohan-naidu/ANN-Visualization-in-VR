@@ -9,6 +9,7 @@ public class NeuronInstantiator : MonoBehaviour
     private Model model;
     private IWorker worker;
     public GameObject neuronPrefab;
+    public Material material;
     // private LineController lineController;
     private Transform firstCenterTransform;
     private Transform secondCenterTransform;
@@ -101,6 +102,7 @@ public class NeuronInstantiator : MonoBehaviour
                     LineRenderer lineRenderer = emptyGameObjects[i][j][k].GetComponent<LineRenderer>();
                     lineRenderer.startWidth = 0.02f;
                     lineRenderer.endWidth = 0.02f;
+                    lineRenderer.material = material;
                     Vector3 sphereCenter = sphereCenters[i + 1][k];
                     Vector3[] points = new Vector3[2];
                     points[0] = firstCenter;
