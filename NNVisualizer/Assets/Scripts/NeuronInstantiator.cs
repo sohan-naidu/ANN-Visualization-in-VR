@@ -24,9 +24,13 @@ public class NeuronInstantiator : MonoBehaviour
         Debug.Log(tempvariable);
         List<int> layersToBeDrawn = new List<int>();
         List<Layer> allLayers = model.layers;
-        Tensor tensorThree = allLayers[6].DataSetToTensor(0);
+        Tensor tensorThree = allLayers[3].DataSetToTensor(0);
         w = tensorThree.data.Download(tensorThree.shape);
+        int cols = tensorThree.shape.channels;
+        int rows = tensorThree.shape.batch;
         Debug.Log(w);
+
+        List<float[]> weights = new List<float[]>();
 
         // it's present in: model.layers[3].datasets[0].shape.flatHeight, model.layers[3].datasets[0].shape.flatWidth.
         // the first three layers are present to load the model????
@@ -38,6 +42,8 @@ public class NeuronInstantiator : MonoBehaviour
             {
                 // found a layer. Add this to the list of layers to be drawn
                 layersToBeDrawn.Add(layer.datasets[0].shape.flatWidth);
+                var currentTensor = layer.DataSetToTensor(0);
+                weights.Add(currentTensor.data.Download(currentTensor.shape));
             }
         }
         // Debug.Log(layersToBeDrawn);
@@ -76,11 +82,11 @@ public class NeuronInstantiator : MonoBehaviour
             currentPosition.x += 3.0f;
         }
 
-        for (int i = 0; i < sphereReferences.Count - 1; i++)
+        for (int i = 1; i < sphereReferences.Count; i++)
         {
             for (int j = 0; j < sphereReferences[i].Count; j++)
             {
-                for (int k = 0; k < sphereReferences[i + 1].Count; k++)
+                for (int k = 0; k < sphereReferences[i - 1].Count; k++)
                 {
                     GameObject temp = new GameObject();
                     temp.AddComponent<LineRenderer>();
@@ -90,20 +96,25 @@ public class NeuronInstantiator : MonoBehaviour
         }
 
         // getting a list of points
-        for (int i = 0; i < sphereCenters.Count - 1; i++)
+        for (int i = 1; i < sphereCenters.Count; i++)
         {
             for (int j = 0; j < sphereCenters[i].Count; j++)
             {
                 Vector3 firstCenter = sphereCenters[i][j];
                 // access the lineRenderer for each sphere
                 // GameObject reference = sphereReferences[i][j];
-                for (int k = 0; k < sphereCenters[i + 1].Count; k++)
+                for (int k = 0; k < sphereCenters[i - 1].Count; k++)
                 {
                     LineRenderer lineRenderer = emptyGameObjects[i][j][k].GetComponent<LineRenderer>();
-                    lineRenderer.startWidth = 0.02f;
-                    lineRenderer.endWidth = 0.02f;
+                    float width = weights[i][k];
+                    width += 1.0f;
+                    width /= 2.0f;
+                    width = Mathf.Lerp(0.004f, 0.04f, width);
+                    lineRenderer.startWidth = width;
+                    lineRenderer.endWidth = width;
+                    // 0.004 to 0.02
                     lineRenderer.material = material;
-                    Vector3 sphereCenter = sphereCenters[i + 1][k];
+                    Vector3 sphereCenter = sphereCenters[i - 1][k];
                     Vector3[] points = new Vector3[2];
                     points[0] = firstCenter;
                     points[1] = sphereCenter;

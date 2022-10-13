@@ -840,7 +840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031552068ee3dc241a6cc9abc4a12133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testModel: {fileID: 5022602860645237092, guid: 1c1f6df333b86364c84c1db1937c4e90,
+  testModel: {fileID: 5022602860645237092, guid: e6971a1421926554696d09cae8bfd11f,
     type: 3}
   neuronPrefab: {fileID: 3364334951021942074, guid: 195e66f4107640949a7bb755813ec637,
     type: 3}
