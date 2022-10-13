@@ -70,3 +70,6 @@ NNVisualizer/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 # Temporary auto-generated Android Assets
 NNVisualizer/[Aa]ssets/[Ss]treamingAssets/aa.meta
 NNVisualizer/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Ignoring pycache file
+__pycache__/
