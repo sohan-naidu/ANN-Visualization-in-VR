@@ -10,8 +10,7 @@ using Leap.Unity;
 using Leap.Unity.Interaction;
 using UnityEngine;
 
-namespace Leap.Unity.InteractionEngine.Examples
-{
+namespace Leap.Unity.InteractionEngine.Examples {
     /// <summary>
     /// This simple script changes the color of an InteractionBehaviour as
     /// a function of its distance to the palm of the closest hand that is
@@ -19,8 +18,7 @@ namespace Leap.Unity.InteractionEngine.Examples
     /// </summary>
     [AddComponentMenu("")]
     [RequireComponent(typeof(InteractionBehaviour))]
-    public class SimpleInteractionGlow : MonoBehaviour
-    {
+    public class SimpleInteractionGlow : MonoBehaviour {
         [Tooltip("If enabled, the object will lerp to its hoverColor when a hand is nearby.")]
         public bool useHover = true;
 
@@ -46,8 +44,7 @@ namespace Leap.Unity.InteractionEngine.Examples
         private Rend[] rends;
 
         [System.Serializable]
-        public class Rend
-        {
+        public class Rend {
             public int materialID = 0;
             public Renderer renderer;
         }
@@ -56,12 +53,10 @@ namespace Leap.Unity.InteractionEngine.Examples
         {
             _intObj = GetComponent<InteractionBehaviour>();
 
-            if (rends.Length > 0)
-            {
+            if (rends.Length > 0) {
                 _materials = new Material[rends.Length];
 
-                for (int i = 0; i < rends.Length; i++)
-                {
+                for (int i = 0; i < rends.Length; i++) {
                     _materials[i] = rends[i].renderer.materials[rends[i].materialID];
                 }
             }
@@ -69,8 +64,7 @@ namespace Leap.Unity.InteractionEngine.Examples
 
         void Update()
         {
-            if (_materials != null)
-            {
+            if (_materials != null) {
 
                 // The target color for the Interaction object will be determined by various simple state checks.
                 Color targetColor = defaultColor;
@@ -78,25 +72,21 @@ namespace Leap.Unity.InteractionEngine.Examples
                 // "Primary hover" is a special kind of hover state that an InteractionBehaviour can
                 // only have if an InteractionHand's thumb, index, or middle finger is closer to it
                 // than any other interaction object.
-                if (_intObj.isPrimaryHovered && usePrimaryHover)
-                {
+                if (_intObj.isPrimaryHovered && usePrimaryHover) {
                     targetColor = primaryHoverColor;
                 }
-                else
-                {
+                else {
                     // Of course, any number of objects can be hovered by any number of InteractionHands.
                     // InteractionBehaviour provides an API for accessing various interaction-related
                     // state information such as the closest hand that is hovering nearby, if the object
                     // is hovered at all.
-                    if (_intObj.isHovered && useHover)
-                    {
+                    if (_intObj.isHovered && useHover) {
                         float glow = _intObj.closestHoveringControllerDistance.Map(0F, 0.2F, 1F, 0.0F);
                         targetColor = Color.Lerp(defaultColor, hoverColor, glow);
                     }
                 }
 
-                if (_intObj.isSuspended)
-                {
+                if (_intObj.isSuspended) {
                     // If the object is held by only one hand and that holding hand stops tracking, the
                     // object is "suspended." InteractionBehaviour provides suspension callbacks if you'd
                     // like the object to, for example, disappear, when the object is suspended.
@@ -106,14 +96,12 @@ namespace Leap.Unity.InteractionEngine.Examples
 
                 // We can also check the depressed-or-not-depressed state of InteractionButton objects
                 // and assign them a unique color in that case.
-                if (_intObj is InteractionButton && (_intObj as InteractionButton).isPressed)
-                {
+                if (_intObj is InteractionButton && ( _intObj as InteractionButton ).isPressed) {
                     targetColor = pressedColor;
                 }
 
                 // Lerp actual material color to the target color.
-                for (int i = 0; i < _materials.Length; i++)
-                {
+                for (int i = 0; i < _materials.Length; i++) {
                     _materials[i].color = Color.Lerp(_materials[i].color, targetColor, 30F * Time.deltaTime);
                 }
             }
