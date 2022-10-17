@@ -8,8 +8,7 @@ class layers():
         self.op = op
         self.x = x
         self.y = y
-        self.modify()
-
+        
     def modify(self):
         hf = h5py.File('../output/input.h5', 'r+')
         arch = json.loads(hf.attrs.get("model_config"))

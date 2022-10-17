@@ -4,30 +4,29 @@ from layers import layers
 import sys
 
 class backend:
-
-    def __init__(self, a, op, x, y):
-        self.a = a
+    def __init__(self, op, x, y):
         self.op = op
         self.x = x
         self.y = y
 
     def do(self):
         neuron = neurons(self.op, self.x, self.y)
-        converter = cto("input.h5", "../input")
+        converter = cto("input.h5", "../output")
         layer = layers(self.op, self.x, self.y)
-        if(self.a == "n"):
-            if(self.op == "add"):
-                neuron.modify(1)
-            else:
-                neuron.modify(0)
+        if(self.op == "add"):
+            #if(self.op == "add"):
+            neuron.modify(1)
+            #else:
+                #neuron.modify(0)
         else:
             layer.modify()
+            pass
         
         converter.convert()
 
 if __name__ == '__main__':
-    [_, a, op, x, y] = sys.argv
+    [_, op, x, y] = sys.argv
     x = int(x)
     y = int(y) 
-    back = backend(a, op, x, y)
+    back = backend(op, x, y)
     back.do()

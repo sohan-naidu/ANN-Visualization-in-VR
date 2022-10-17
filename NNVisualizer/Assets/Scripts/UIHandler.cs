@@ -35,7 +35,7 @@ public class UIHandler : MonoBehaviour {
 
     private void Start()
     {
-        fileName = Application.dataPath + "\\Scripts\\PythonScripts\\backend.py";
+        fileName = Application.dataPath + "/Scripts/PythonScripts/scripts/backend.py";
         Debug.Log(fileName);
         instantiateUI();
     }
@@ -121,11 +121,11 @@ public class UIHandler : MonoBehaviour {
                 cmd = "not Supported";
                 break;
         }
-        string args = string.Format("{0} {1} {2}", cmd, numberOfNeurons, layer);
+        string args = string.Format("{0} {1} {2}", cmd, layer, numberOfNeurons);
         System.Diagnostics.Process p = new System.Diagnostics.Process();
         p.StartInfo = new System.Diagnostics.ProcessStartInfo();
         //check if works
-        p.StartInfo.FileName = "python3";
+        p.StartInfo.FileName = "python";
         p.StartInfo.Arguments = string.Format("{0} {1}", fileName, args);
         p.StartInfo.RedirectStandardOutput = true;
         p.StartInfo.UseShellExecute = false;
@@ -133,10 +133,11 @@ public class UIHandler : MonoBehaviour {
         p.Start();
 
         string output = p.StandardOutput.ReadToEnd();
+        Debug.Log(output);
+
         p.WaitForExit();
 
         Debug.Log("Successfully called Sohan's part");
-
 
         //Change model to new model
         //Incorporate in NeuronInstantiator

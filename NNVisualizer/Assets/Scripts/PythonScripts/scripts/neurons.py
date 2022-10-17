@@ -8,10 +8,6 @@ class neurons():
         self.x = x
         self.y = y
         self.op = op
-        if(self.op == "add"):
-            self.modify(1)
-        else:
-            self.modify(0)
 
     def modify(self, flag):
     
@@ -32,32 +28,36 @@ class neurons():
         old = np.array(hf[groups[index]])
         oldbias = np.array(hf[groups[index - 1]])
         if(flag):
-            new = np.random.normal(-0.3, 0.3, size = (old.shape[0]))
-            upd = np.insert(old, self.y, new, axis = 1)
+            new = np.zeros(shape = old.shape[1]).reshape(old.shape[1], 1)
             newbias = np.zeros(1)
-            updbias = np.insert(oldbias, self.y, newbias, axis = 0)
-            arch['config']['layers'][self.x + 1]['config']['units'] += 1 # Updating architecture, 1-indexed
+            for _ in range(self.y):   
+                old = np.append(old, new, axis = 1)
+                oldbias = np.append(oldbias, newbias)
+            
+            arch['config']['layers'][self.x + 1]['config']['units'] += self.y # Updating architecture, 1-indexed
         else:
             upd = np.delete(old, self.y, axis = 1)
             updbias = np.delete(oldbias, self.y, axis = 0)
             arch['config']['layers'][self.x + 1]['config']['units'] -= 1
         #ith kernel
         del hf[groups[index]]
-        hf.create_dataset(groups[index], (upd.shape[0], upd.shape[1]), data = upd)
+        hf.create_dataset(groups[index], data = old)
         #ith bias
         del hf[groups[index - 1]]
-        hf.create_dataset(groups[index - 1], (upd.shape[1],), data = updbias)
+        hf.create_dataset(groups[index - 1], data = oldbias)
         #(i + 1)th kernel
         if(index + 2 < len(groups)):
             oldnextkernel = np.array(hf[groups[index + 2]])
+            
             prev = hf[groups[index + 2]].shape[1]
             if(flag):
                 newnextkernel = np.zeros(shape = (1, prev))
-                updnextkernel = np.insert(oldnextkernel, self.y, newnextkernel, axis = 0)
+                for _ in range((self.y)):
+                    oldnextkernel = np.append(oldnextkernel, newnextkernel, axis = 0)
             else:
                 updnextkernel = np.delete(oldnextkernel, self.y, axis = 0)
             del hf[groups[index + 2]]
-            hf.create_dataset(groups[index + 2], (upd.shape[1], prev), data = updnextkernel)
+            hf.create_dataset(groups[index + 2], data = oldnextkernel)
             
         updarch = json.dumps(arch)
         hf.attrs.modify("model_config", updarch)
