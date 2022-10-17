@@ -16,6 +16,8 @@ public class NeuronInstantiator : MonoBehaviour {
     public NNModel testChangedModel;
     public List<GameObject> layerObjects = new List<GameObject>();
     public GameObject LayerParentGameObject;
+    List<List<GameObject>> sphereReferences = new List<List<GameObject>>();
+    List<List<List<GameObject>>> emptyGameObjects = new List<List<List<GameObject>>>();
     // private LineController lineController;
 
     public List<float[]> Generate_Weights(Model currentNNModel)
@@ -74,8 +76,18 @@ public class NeuronInstantiator : MonoBehaviour {
         Vector3 toSubtract = new Vector3(3.0f * layersToTheLeft, maxDrawSpaceHeight, maxDepth);
         Vector3 currentPosition = NNCenter - toSubtract;
         int index = 0;
-        List<List<GameObject>> sphereReferences = new List<List<GameObject>>();
-        List<List<List<GameObject>>> emptyGameObjects = new List<List<List<GameObject>>>();
+
+        for (int i = 0; i < sphereReferences.Count; i++)
+            for (int j = 0; j < sphereReferences[i].Count; j++)
+                Destroy(sphereReferences[i][j]);
+
+        for (int i = 0; i < emptyGameObjects.Count; i++)
+            for (int j = 0; j < emptyGameObjects[i].Count; j++)
+                for (int k = 0; k < emptyGameObjects[i][j].Count; k++)
+                    Destroy(emptyGameObjects[i][j][k]);
+
+        sphereReferences = new List<List<GameObject>>();
+        emptyGameObjects = new List<List<List<GameObject>>>();
         foreach (int size in layersToBeDrawn) {
             sphereCenters.Add(new List<Vector3>());
             sphereReferences.Add(new List<GameObject>());
@@ -157,7 +169,7 @@ public class NeuronInstantiator : MonoBehaviour {
 
     // ideally, should compare two neural networks to see changes/differences, and then send pulses to the ones that have been changed
     // at the moment, it sends pulses everywhere (as a test).
-    void SendPulses(Model previousModel, Model currentModel)
+    void SendPulses(List<float[]> previousModel, List<float[]> currentModel)
     {
         List<List<Vector3>> finalList = new List<List<Vector3>>();
         List<bool[]> diff = NeuralNetWorkSpawner.GetComponent<NNDiff>().Generate_Diff(previousModel, currentModel);
@@ -204,11 +216,11 @@ public class NeuronInstantiator : MonoBehaviour {
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime >= 5.0f) {
+        if (elapsedTime >= 10.0f) {
             elapsedTime = 0;
             // check for updates
             // Model updatedModel = ModelLoader.Load(testModel);
-            Model oldModel = model;
+            List<float[]> oldWeights = Generate_Weights(model);
             // TODO: make sure to check layers as well
             // get a diff between both models
             // update the weights (also do layers at some point)
@@ -216,7 +228,7 @@ public class NeuronInstantiator : MonoBehaviour {
             // don't do it at the moment
             GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
             InstantiateNetwork();
-            // SendPulses(oldModel, model);
+            SendPulses(oldWeights, Generate_Weights(model));
         }
     }
 }

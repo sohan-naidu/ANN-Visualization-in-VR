@@ -126,28 +126,30 @@ public class UIHandler : MonoBehaviour {
         System.Diagnostics.Process p = new System.Diagnostics.Process();
         p.StartInfo = new System.Diagnostics.ProcessStartInfo();
         //check if works
-        p.StartInfo.FileName = "python";
-        p.StartInfo.RedirectStandardError = true;
+        p.StartInfo.FileName = "C:/My_Files/Dev/Anaconda3/envs/minimal_ds/python.exe";
+        //p.StartInfo.RedirectStandardError = true;
         p.StartInfo.Arguments = string.Format("{0} {1}", fileName, args);
-        p.StartInfo.RedirectStandardOutput = true;
-        p.StartInfo.UseShellExecute = false;
-        p.StartInfo.CreateNoWindow = true;
-        Debug.Log(p.StartInfo.Arguments);
+        //p.StartInfo.RedirectStandardOutput = true;
+        p.StartInfo.UseShellExecute = true;
+        //p.StartInfo.CreateNoWindow = true;
+        //Debug.Log(p.StartInfo.Arguments);
         p.Start();
 
+        /*
         string output = p.StandardOutput.ReadToEnd();
         Debug.Log(output);
 
         string stringErrorOutput = p.StandardError.ReadToEnd();
         Debug.Log(stringErrorOutput);
+        */
 
-        p.WaitForExit();
+        // p.WaitForExit();
 
         Debug.Log("Successfully called Sohan's part");
 
         //Change model to new model
         //Incorporate in NeuronInstantiator
-        // GameObject.Find("NeuralNetworkSpawner").GetComponent<NeuronInstantiator>().InstantiateNetwork();
+        //GameObject.Find("NeuralNetworkSpawner").GetComponent<NeuronInstantiator>().InstantiateNetwork();
         instantiateUI();
 
     }
