@@ -13,10 +13,15 @@ public class NNDiff : MonoBehaviour
         List<float[]> previousWeights = NeuralNetworkSpawner.GetComponent<NeuronInstantiator>().Generate_Weights(previous);
         List<float[]> currentWeights = NeuralNetworkSpawner.GetComponent<NeuronInstantiator>().Generate_Weights(current);
         List<bool[]> diff = new List<bool[]>();
-        for (int i = 0; i < previousWeights.Count; i++)
+        for (int i = 0; i < currentWeights.Count; i++)
         {
             diff.Add(new bool[currentWeights[i].Length]);
-            for (int j = 0; j < previousWeights[i].Length; j++) { 
+            for (int j = 0; j < currentWeights[i].Length; j++) { 
+                if (previousWeights.Count <= i || previousWeights[i].Length <= j)
+                {
+                    diff[i][j] = true;
+                    continue;
+                }
                 if (previousWeights[i][j] != currentWeights[i][j])
                 {
                     diff[i][j] = true;

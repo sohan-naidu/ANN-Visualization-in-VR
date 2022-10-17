@@ -34,6 +34,7 @@ public class NeuronInstantiator : MonoBehaviour {
     public void InstantiateNetwork()
     {
         model = ModelLoader.Load(testModel);
+        sphereCenters = new List<List<Vector3>>();
         // worker = WorkerFactory.CreateWorker(WorkerFactory.Type.Auto, model);
         // float[] w = model.layers[3].weights;
         // var tempvariable = model.layers[3].datasets[0]; // 35!!!
@@ -47,6 +48,7 @@ public class NeuronInstantiator : MonoBehaviour {
         // Debug.Log(w);
 
         List<float[]> weights = Generate_Weights(model);
+        Debug.Log(weights);
 
         // it's present in: model.layers[3].datasets[0].shape.flatHeight, model.layers[3].datasets[0].shape.flatWidth.
         // the first three layers are present to load the model????
@@ -202,19 +204,19 @@ public class NeuronInstantiator : MonoBehaviour {
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime >= 3.0f) {
+        if (elapsedTime >= 5.0f) {
             elapsedTime = 0;
             // check for updates
-            Model updatedModel = ModelLoader.Load(testModel);
+            // Model updatedModel = ModelLoader.Load(testModel);
+            Model oldModel = model;
             // TODO: make sure to check layers as well
             // get a diff between both models
             // update the weights (also do layers at some point)
             // SendPulses(model, updatedModel);
             // don't do it at the moment
-            Model m1 = ModelLoader.Load(testInputModel);
-            Model m2 = ModelLoader.Load(testChangedModel);
-            SendPulses(m1, m2);
-            model = updatedModel;
+            GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
+            InstantiateNetwork();
+            // SendPulses(oldModel, model);
         }
     }
 }

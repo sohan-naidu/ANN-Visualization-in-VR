@@ -2,6 +2,7 @@ import h5py
 import numpy as np
 import json
 import convertToONNX as cto
+import os
 
 class neurons():
     def __init__(self, op, x, y):
@@ -11,7 +12,7 @@ class neurons():
 
     def modify(self, flag):
     
-        hf = h5py.File('../output/input.h5', 'r+')
+        hf = h5py.File(os.path.dirname(os.path.abspath(__file__)) + '/../output/input.h5', 'r+')
         arch = json.loads(hf.attrs.get("model_config"))
 
         all = []

@@ -757,7 +757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031552068ee3dc241a6cc9abc4a12133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testModel: {fileID: 5022602860645237092, guid: e6971a1421926554696d09cae8bfd11f,
+  testModel: {fileID: 5022602860645237092, guid: 05504c91d5847454e85dace7952b9f31,
     type: 3}
   neuronPrefab: {fileID: 3364334951021942074, guid: 195e66f4107640949a7bb755813ec637,
     type: 3}
@@ -5828,9 +5828,10 @@ MonoBehaviour:
     type: 3}
   layerBoxPrefab: {fileID: 3190679617934092921, guid: 973d3d020a0ae18429bcc5e0da835a63,
     type: 3}
+  fileName: 
   buttonType: 0
-  numberOfNeurons: 0
-  layer: 0
+  numberOfNeurons: 1
+  layer: 1
 --- !u!1 &730479318
 GameObject:
   m_ObjectHideFlags: 0
@@ -13056,7 +13057,7 @@ PrefabInstance:
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9548735
+      value: 0.95487344
       objectReference: {fileID: 0}
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
@@ -15238,7 +15239,7 @@ PrefabInstance:
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9548735
+      value: 0.95487344
       objectReference: {fileID: 0}
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}

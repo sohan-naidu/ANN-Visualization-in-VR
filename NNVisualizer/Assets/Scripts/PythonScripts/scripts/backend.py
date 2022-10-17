@@ -2,6 +2,7 @@ from convertToONNX import convertToONNX as cto
 from neurons import neurons
 from layers import layers
 import sys
+import os
 
 class backend:
     def __init__(self, op, x, y):
@@ -11,7 +12,7 @@ class backend:
 
     def do(self):
         neuron = neurons(self.op, self.x, self.y)
-        converter = cto("input.h5", "../output")
+        converter = cto("input.h5", os.path.dirname(os.path.abspath(__file__)) + '/../output/')
         layer = layers(self.op, self.x, self.y)
         if(self.op == "add"):
             #if(self.op == "add"):

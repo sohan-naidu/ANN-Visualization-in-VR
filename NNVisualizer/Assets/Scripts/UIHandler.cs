@@ -38,6 +38,7 @@ public class UIHandler : MonoBehaviour {
         fileName = Application.dataPath + "/Scripts/PythonScripts/scripts/backend.py";
         Debug.Log(fileName);
         instantiateUI();
+        // callUpdate();
     }
     public void instantiateUI()
     {
@@ -126,14 +127,19 @@ public class UIHandler : MonoBehaviour {
         p.StartInfo = new System.Diagnostics.ProcessStartInfo();
         //check if works
         p.StartInfo.FileName = "python";
+        p.StartInfo.RedirectStandardError = true;
         p.StartInfo.Arguments = string.Format("{0} {1}", fileName, args);
         p.StartInfo.RedirectStandardOutput = true;
         p.StartInfo.UseShellExecute = false;
         p.StartInfo.CreateNoWindow = true;
+        Debug.Log(p.StartInfo.Arguments);
         p.Start();
 
         string output = p.StandardOutput.ReadToEnd();
         Debug.Log(output);
+
+        string stringErrorOutput = p.StandardError.ReadToEnd();
+        Debug.Log(stringErrorOutput);
 
         p.WaitForExit();
 
@@ -141,7 +147,7 @@ public class UIHandler : MonoBehaviour {
 
         //Change model to new model
         //Incorporate in NeuronInstantiator
-        GameObject.Find("NeuralNetworkSpawner").GetComponent<NeuronInstantiator>().InstantiateNetwork();
+        // GameObject.Find("NeuralNetworkSpawner").GetComponent<NeuronInstantiator>().InstantiateNetwork();
         instantiateUI();
 
     }

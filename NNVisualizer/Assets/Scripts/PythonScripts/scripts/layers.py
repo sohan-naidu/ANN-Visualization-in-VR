@@ -2,6 +2,7 @@ import h5py
 import json
 import numpy as np
 import copy
+import os
 
 class layers():
     def __init__(self, op, x, y):
@@ -10,7 +11,7 @@ class layers():
         self.y = y
         
     def modify(self):
-        hf = h5py.File('../output/input.h5', 'r+')
+        hf = h5py.File(os.path.dirname(os.path.abspath(__file__)) + '/../output/input.h5', 'r+')
         arch = json.loads(hf.attrs.get("model_config"))
         all = []
         hf.visit(all.append)
