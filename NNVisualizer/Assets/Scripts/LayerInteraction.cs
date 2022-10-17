@@ -93,7 +93,7 @@ public class LayerInteraction : MonoBehaviour {
                 targetColor = pressedColor;
             }
 
-            Debug.Log(targetColor);
+            //Debug.Log(targetColor);
             // Lerp actual material color to the target color.
             for (int i = 0; i < _materials.Length; i++) {
                 //_materials[i].SetColor("g_vOutlineColor", Color.Lerp(_materials[i].GetColor("g_vOutlineColor"), targetColor, 30F * Time.deltaTime));
@@ -107,7 +107,8 @@ public class LayerInteraction : MonoBehaviour {
         UIHandler obj = GameObject.Find("UI").GetComponent<UIHandler>();
         obj.layer = layerNum;
 
-        Destroy(GameObject.Find("layerBoxParent"));
+        Destroy(GameObject.Find("Layer Boxes"));
+        Destroy(GameObject.Find("Layer Parents"));
         obj.callUpdate();
     }
 

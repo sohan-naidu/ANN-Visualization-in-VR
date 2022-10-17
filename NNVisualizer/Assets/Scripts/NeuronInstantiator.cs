@@ -103,7 +103,7 @@ public class NeuronInstantiator : MonoBehaviour {
         for (int i = 0; i < layersToBeDrawn.Count; i++) {
             float mx_y = 0;
             for (int j = 0; j < layersToBeDrawn[i]; j++) {
-                sphereCenters[i][j] = new Vector3(sphereCenters[i][j].x, sphereCenters[i][j % limit].y, sphereCenters[i][j].z + ( j / limit * 2.0f ));
+                sphereCenters[i][j] = new Vector3(sphereCenters[i][j].x, sphereCenters[i][j % limit].y, sphereCenters[i][j].z + ( ( j / limit ) * 2.0f ));
                 sphereReferences[i][j].transform.position = sphereCenters[i][j];
                 mx_y = Mathf.Max(mx_y, sphereCenters[i][j].y);
             }

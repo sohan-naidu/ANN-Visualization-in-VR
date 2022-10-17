@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 using Leap.Unity.Interaction;
 
 public class UIHandler : MonoBehaviour {
@@ -25,21 +24,27 @@ public class UIHandler : MonoBehaviour {
     [SerializeField]
     GameObject layerBoxPrefab;
     GameObject layerBoxParent;
+    public string fileName;
 
     GameObject buttons;
     GameObject slider;
+    GameObject layerBoxes;
     public ButtonType buttonType;
     public int numberOfNeurons;
     public int layer;
 
     private void Start()
     {
+        fileName = Application.dataPath + "\\Scripts\\PythonScripts\\backend.py";
+        Debug.Log(fileName);
         instantiateUI();
     }
     public void instantiateUI()
     {
         buttons = Instantiate(UIButtonsPrefab);
+        buttons.name = "UIButtons";
         buttons.transform.SetParent(GameObject.Find("UI").transform);
+        buttons.transform.position = GameObject.Find("UI").transform.position;
     }
     private void destroyObject(GameObject obj)
     {
@@ -66,30 +71,76 @@ public class UIHandler : MonoBehaviour {
     {
         Debug.Log("slider has been spawned");
         slider = Instantiate(sliderPrefab, this.transform);
+        slider.name = "Cube UI Slider Panel";
         slider.transform.SetParent(GameObject.Find("UI").transform);
     }
 
     public void spawnLayerBoxes()
     {
         layerBoxParent = GameObject.Find("Layer Parent");
-        //Layer information
-        //  transform of layer
-        //  name/index of layer
-        //spawn the boxes
-        for (int i = 0; i < layerBoxParent.transform.childCount; i++) {
-            GameObject obj = Instantiate(layerBoxPrefab);
-            obj.name = "LayerBox" + i;
-            obj.transform.SetParent(layerBoxParent.transform);
-            obj.transform.position = layerBoxParent.transform.GetChild(i).position;
+        if (layerBoxParent == null) {
+            Debug.LogError("NO LAYER PARENT DETECTED");
+            return;
         }
+
+
+        int i = 0;
+        layerBoxes = new GameObject("LayerBoxes");
+        layerBoxes.transform.position = layerBoxParent.transform.position;
+
+        //for lim of 5 and 2 divs per layer
+        //set Scales to (4, 7, 3)
+        //z value depends on number of layer divs
+        //y value depends on maxDrawHeight => 1 perfectly encapsulates one sphere
+        foreach (Transform child in layerBoxParent.transform) {
+            //Debug.Log(child.gameObject.name);
+            GameObject obj = Instantiate(layerBoxPrefab);
+            obj.name = string.Format("LayerBox_{0}", i);
+            obj.transform.GetChild(0).GetComponent<LayerInteraction>().layerNum = i;
+            obj.transform.SetParent(layerBoxes.transform);
+            obj.transform.position = child.position;
+            obj.transform.localScale = new Vector3(4, 7, 3);
+            i++;
+        }
+
     }
 
     //Manzood + Sohan integration
     //Do what they want here
     public void callUpdate()
     {
-        //call Sohan's script
+        string cmd;
+        switch (buttonType) {
+            case ButtonType.AddNeuron:
+                cmd = "add";
+                break;
+            case ButtonType.AddLayer:
+                cmd = "addLayer";
+                break;
+            default:
+                cmd = "not Supported";
+                break;
+        }
+        string args = string.Format("{0} {1} {2}", cmd, numberOfNeurons, layer);
+        System.Diagnostics.Process p = new System.Diagnostics.Process();
+        p.StartInfo = new System.Diagnostics.ProcessStartInfo();
+        //check if works
+        p.StartInfo.FileName = "python3";
+        p.StartInfo.Arguments = string.Format("{0} {1}", fileName, args);
+        p.StartInfo.RedirectStandardOutput = true;
+        p.StartInfo.UseShellExecute = false;
+        p.StartInfo.CreateNoWindow = true;
+        p.Start();
 
+        string output = p.StandardOutput.ReadToEnd();
+        p.WaitForExit();
+
+        Debug.Log("Successfully called Sohan's part");
+
+
+        //Change model to new model
+        //Incorporate in NeuronInstantiator
+        GameObject.Find("NeuralNetworkSpawner").GetComponent<NeuronInstantiator>().InstantiateNetwork();
         instantiateUI();
 
     }
