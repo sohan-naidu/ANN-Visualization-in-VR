@@ -1,7 +1,10 @@
+#import sys
+import os
+import argparse
 from convertToONNX import convertToONNX as cto
 from neurons import neurons
 from layers import layers
-import sys
+from init import init
 
 class backend:
     def __init__(self, op, x, y):
@@ -11,7 +14,7 @@ class backend:
 
     def do(self):
         neuron = neurons(self.op, self.x, self.y)
-        converter = cto("input.h5", "../output")
+        converter = cto("input.h5", os.path.dirname(os.path.abspath(__file__)) + '/../output/')
         layer = layers(self.op, self.x, self.y)
         if(self.op == "add"):
             #if(self.op == "add"):
@@ -20,13 +23,20 @@ class backend:
                 #neuron.modify(0)
         else:
             layer.modify()
-            pass
         
         converter.convert()
 
 if __name__ == '__main__':
-    [_, op, x, y] = sys.argv
-    x = int(x)
-    y = int(y) 
-    back = backend(op, x, y)
+    parser = argparse.ArgumentParser(description = "Backend argument parser.")
+    parser.add_argument('op', type = str, help = 'Operation that needs to be done in backend.')
+    parser.add_argument('x', type = int, help = 'Layer index.')
+    parser.add_argument('y', type = int, help = 'Number of neurons.')
+    parser.add_argument('-r', action = 'store_true', help = 'Pass this argument to run init.py to reset model.')
+    args = parser.parse_args()
+
+    if(args.r):
+        inst = init()
+        inst.reset()
+    
+    back = backend(args.op, args.x, args.y)
     back.do()

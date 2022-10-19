@@ -2,6 +2,7 @@ import h5py
 import numpy as np
 import json
 import convertToONNX as cto
+import os
 
 class neurons():
     def __init__(self, op, x, y):
@@ -11,7 +12,7 @@ class neurons():
 
     def modify(self, flag):
     
-        hf = h5py.File('../output/input.h5', 'r+')
+        hf = h5py.File(os.path.dirname(os.path.abspath(__file__)) + '/../output/input.h5', 'r+')
         arch = json.loads(hf.attrs.get("model_config"))
 
         all = []
@@ -28,7 +29,7 @@ class neurons():
         old = np.array(hf[groups[index]])
         oldbias = np.array(hf[groups[index - 1]])
         if(flag):
-            new = np.zeros(shape = old.shape[1]).reshape(old.shape[1], 1)
+            new = np.zeros(shape = old.shape[0]).reshape(old.shape[0], 1)
             newbias = np.zeros(1)
             for _ in range(self.y):   
                 old = np.append(old, new, axis = 1)

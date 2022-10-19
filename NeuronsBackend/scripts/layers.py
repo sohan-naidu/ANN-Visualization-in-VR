@@ -2,6 +2,7 @@ import h5py
 import json
 import numpy as np
 import copy
+import os
 
 class layers():
     def __init__(self, op, x, y):
@@ -10,7 +11,7 @@ class layers():
         self.y = y
         
     def modify(self):
-        hf = h5py.File('../output/input.h5', 'r+')
+        hf = h5py.File(os.path.dirname(os.path.abspath(__file__)) + '/../output/input.h5', 'r+')
         arch = json.loads(hf.attrs.get("model_config"))
         all = []
         hf.visit(all.append)
@@ -38,6 +39,7 @@ class layers():
                 optimizerData = copy.deepcopy(optimizerGroups[i])
                 newDict = copy.deepcopy(layers[self.x])
                 newDict['config']['units'] = self.y
+                newDict['config']['activation'] = 'relu'
                 groupData.append(prev)
                 optimizerData.append(prev)
 
@@ -105,7 +107,7 @@ class layers():
 
         newGroup = hf.create_group(groupData[0])
         hf.create_group(groupData[1])                                                         
-        hf.create_dataset(groupData[2], data = np.zeros([self.y, ]))  # should be bias
+        hf.create_dataset(groupData[2], data = np.random.rand(self.y, ))  # should be bias
         hf.create_dataset(groupData[3], data = np.zeros([groupData[4], self.y]))   # should be kernel
         kernelName = allLayers[0] + "_" + str(self.x) + "/kernel:0"
         biasName = allLayers[0] + "_" + str(self.x) + "/bias:0"
@@ -157,11 +159,11 @@ class layers():
         
         hf.create_group(optimizerData[0])  # dense_i
         hf.create_group(optimizerData[1])   # dense_i/bias
-        hf.create_dataset(optimizerData[2], shape = (self.y, ))  # bias/m:0
-        hf.create_dataset(optimizerData[3], shape = (self.y, ))  # bias/v:0
+        hf.create_dataset(optimizerData[2], data = np.random.rand(self.y, ))  # bias/m:0
+        hf.create_dataset(optimizerData[3], data = np.random.rand(self.y, ))  # bias/v:0
         hf.create_group(optimizerData[4])    # dense_i/kernel
-        hf.create_dataset(optimizerData[5], shape = (optimizerData[7], self.y))   #dense_i/kernel/m:0
-        hf.create_dataset(optimizerData[6], shape = (optimizerData[7], self.y))  # dense_i/kernel/v:0
+        hf.create_dataset(optimizerData[5], data = np.random.rand(optimizerData[7], self.y))   #dense_i/kernel/m:0
+        hf.create_dataset(optimizerData[6], data = np.random.rand(optimizerData[7], self.y))  # dense_i/kernel/v:0
         
 
         for i in range(self.x, len(optimizerGroups)):
@@ -169,10 +171,10 @@ class layers():
             hf.create_group(optimizerGroups[i][1])
             hf.create_group(optimizerGroups[i][4])
             if(i == self.x):
-                hf.create_dataset(optimizerGroups[i][2], shape = (optimizerData[7], ))    # Bias m:0
-                hf.create_dataset(optimizerGroups[i][3], shape = (optimizerData[7], ))    # Bias v:0
-                hf.create_dataset(optimizerGroups[i][5], shape = (self.y, optimizerData[7]))   # Kernel m:0
-                hf.create_dataset(optimizerGroups[i][6], shape = (self.y, optimizerData[7]))   # Kernel m:0
+                hf.create_dataset(optimizerGroups[i][2], data = np.random.rand(optimizerData[7], ))    # Bias m:0
+                hf.create_dataset(optimizerGroups[i][3], data = np.random.rand(optimizerData[7], ))    # Bias v:0
+                hf.create_dataset(optimizerGroups[i][5], data = np.random.rand(self.y, optimizerData[7]))   # Kernel m:0
+                hf.create_dataset(optimizerGroups[i][6], data = np.random.rand(self.y, optimizerData[7]))   # Kernel m:0
             else:
                 hf.create_dataset(optimizerGroups[i][2], data = saved[i - self.x][0])
                 hf.create_dataset(optimizerGroups[i][3], data = saved[i - self.x][1])
