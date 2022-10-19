@@ -29,7 +29,7 @@ class neurons():
         old = np.array(hf[groups[index]])
         oldbias = np.array(hf[groups[index - 1]])
         if(flag):
-            new = np.zeros(shape = old.shape[1]).reshape(old.shape[1], 1)
+            new = np.zeros(shape = old.shape[0]).reshape(old.shape[0], 1)
             newbias = np.zeros(1)
             for _ in range(self.y):   
                 old = np.append(old, new, axis = 1)
