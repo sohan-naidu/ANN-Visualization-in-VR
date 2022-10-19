@@ -86,6 +86,9 @@ public class NeuronInstantiator : MonoBehaviour {
                 for (int k = 0; k < emptyGameObjects[i][j].Count; k++)
                     Destroy(emptyGameObjects[i][j][k]);
 
+        for (int i = 0; i < layerObjects.Count; i++)
+            Destroy(layerObjects[i]);
+
         sphereReferences = new List<List<GameObject>>();
         emptyGameObjects = new List<List<List<GameObject>>>();
         foreach (int size in layersToBeDrawn) {
@@ -121,7 +124,7 @@ public class NeuronInstantiator : MonoBehaviour {
                 sphereReferences[i][j].transform.position = sphereCenters[i][j];
                 mx_y = Mathf.Max(mx_y, sphereCenters[i][j].y);
             }
-            GameObject temp = new GameObject();
+            GameObject temp = new GameObject("Layer " + i.ToString());
             temp.transform.position = new Vector3(sphereCenters[i][0].x, ( mx_y + sphereCenters[i][0].y ) / 2.0f, ( layersToBeDrawn[i] > 1 ? layersToBeDrawn[i] / limit + 1 : 0 ) / 2.0f + 2.25f);
             temp.transform.parent = LayerParentGameObject.transform;
             layerObjects.Add(temp);
@@ -226,7 +229,7 @@ public class NeuronInstantiator : MonoBehaviour {
             // update the weights (also do layers at some point)
             // SendPulses(model, updatedModel);
             // don't do it at the moment
-            GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
+            //GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
             InstantiateNetwork();
             SendPulses(oldWeights, Generate_Weights(model));
         }
