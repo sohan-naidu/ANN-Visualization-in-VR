@@ -73,3 +73,6 @@ NNVisualizer/[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Ignoring pycache file
 __pycache__/
+
+# All meta files
+*.meta
