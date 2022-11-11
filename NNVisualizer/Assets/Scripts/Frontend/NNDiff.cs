@@ -5,6 +5,7 @@ using Unity.Barracuda;
 
 public class NNDiff : MonoBehaviour {
     public GameObject NeuralNetworkSpawner;
+
     // takes a set of weights of two neural networks and generates their diff
     // TODO: currently very barebones, needs updation to handle changes in layers
     public List<bool[]> Generate_Diff(List<float[]> previousWeights, List<float[]> currentWeights)
@@ -27,6 +28,8 @@ public class NNDiff : MonoBehaviour {
                 }
             }
         }
+        // TODO: comment the following line out
+        diff[0][0] = true;
         return diff;
     }
 }

@@ -24,7 +24,6 @@ public class PulseController : MonoBehaviour
             int currentSize = trailObjects.Count;
             while (currentSize < n)
             {
-                // instantiate new obj
                 GameObject reference = Instantiate(NNPulsePrefab);
                 reference.transform.position = Positions[currentSize][0];
                 GameObject temp = new GameObject();
