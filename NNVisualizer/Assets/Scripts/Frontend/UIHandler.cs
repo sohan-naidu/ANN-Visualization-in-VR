@@ -103,22 +103,35 @@ public class UIHandler : MonoBehaviour {
     public void spawnLayerBoxes()
     {
         layerBoxParent = GameObject.Find("Layer Parent");
+
+        layerBoxes = new GameObject("Layer Boxes");
+        layerBoxes.transform.position = layerBoxParent.transform.position;
+
         if (layerBoxParent == null) {
             Debug.LogError("NO LAYER PARENT DETECTED");
             return;
         }
 
+        for (int i = 0; i < layerBoxParent.transform.childCount; i++) {
+            GameObject obj = Instantiate(layerBoxPrefab);
+            obj.name = string.Format("LayerBox_{0}", i);
+            obj.transform.SetParent(layerBoxes.transform);
+            obj.transform.position = layerBoxParent.transform.GetChild(i).transform.position;
+            NeuronInstantiator.NNCube cube = GameObject.Find("NeuralNetworkSpawner").GetComponent<NeuronInstantiator>().cube;
+            obj.transform.localScale = new Vector3(cube.jumpLength.x / 2f, cube.height, cube.width);
+        }
 
-        int i = 0;
-        layerBoxes = new GameObject("LayerBoxes");
-        layerBoxes.transform.position = layerBoxParent.transform.position;
+
+        //int i = 0;
+        //layerBoxes = new GameObject("LayerBoxes");
+        //layerBoxes.transform.position = layerBoxParent.transform.position;
 
         //fix size (hard-coded for now)
         //for lim of 5 and 2 divs per layer
         //set Scales to (4, 7, 3)
         //z value depends on number of layer divs
         //y value depends on maxDrawHeight => 1 perfectly encapsulates one sphere
-        foreach (Transform child in layerBoxParent.transform) {
+        /*foreach (Transform child in layerBoxParent.transform) {
             //Debug.Log(child.gameObject.name);
             GameObject obj = Instantiate(layerBoxPrefab);
             obj.name = string.Format("LayerBox_{0}", i);
@@ -127,7 +140,7 @@ public class UIHandler : MonoBehaviour {
             obj.transform.position = child.position;
             obj.transform.localScale = new Vector3(4, 7, 3);
             i++;
-        }
+        }*/
 
     }
 

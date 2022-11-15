@@ -813,7 +813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neuronPrefab: {fileID: 3364334951021942074, guid: 195e66f4107640949a7bb755813ec637,
     type: 3}
-  material: {fileID: 2100000, guid: 668490d1e2537624c99ab58447146100, type: 2}
+  lineMaterial: {fileID: 2100000, guid: 8b5e64e4e5cc9f34ba2986559413572f, type: 2}
   Model: {fileID: 5022602860645237092, guid: cb1dde0356456f24b9dcfe7291d931b1, type: 3}
   testInputModel: {fileID: 5022602860645237092, guid: cb1dde0356456f24b9dcfe7291d931b1,
     type: 3}
