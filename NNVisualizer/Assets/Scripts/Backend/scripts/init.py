@@ -11,7 +11,8 @@ class initialize:
         self.JSON = "ip.json"
 
     def initialize(self):
-        os.chdir('../input/')
+        # os.chdir('../input/')
+        os.chdir(os.path.dirname(os.path.abspath(__file__))+'/../input/')
         #df = pd.read_csv(self.dataset)
         data = json.loads(open(self.JSON, "r").read())
         #columnCount = len(df.columns)

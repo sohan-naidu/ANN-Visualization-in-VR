@@ -41,7 +41,8 @@ class train():
         self.x_train, self.y_train = self.get()
 
     def get(self):
-        os.chdir("../input/")
+        #os.chdir("../input/")
+        os.chdir(os.path.dirname(os.path.abspath(__file__))+'/../input/')
         data = json.loads(open(self.JSON, "r").read())
         datasetPath = data["datasetPath"]
         df = pd.read_csv(datasetPath)

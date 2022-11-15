@@ -12,7 +12,9 @@ public class UIHandler : MonoBehaviour {
     public enum ButtonType {
         AddNeuron,
         DeleteNeuron,
-        AddLayer
+        AddLayer,
+        DeleteLayer,
+        None
     }
 
     [SerializeField]
@@ -23,15 +25,19 @@ public class UIHandler : MonoBehaviour {
     GameObject UIButtonsPrefab;
     [SerializeField]
     GameObject layerBoxPrefab;
+    [SerializeField]
+    GameObject neuronSelectPrefab;
     GameObject layerBoxParent;
-    public string fileName;
+    private string fileName;
 
     GameObject buttons;
     GameObject slider;
     GameObject layerBoxes;
+    public GameObject neuronSelect;
     public ButtonType buttonType;
     public int numberOfNeurons;
     public int layer;
+    public int neuronPosition;
 
     private void Start()
     {
@@ -42,11 +48,15 @@ public class UIHandler : MonoBehaviour {
     }
     public void instantiateUI()
     {
+        buttonType = UIHandler.ButtonType.None;
         buttons = Instantiate(UIButtonsPrefab);
         buttons.name = "UIButtons";
         buttons.transform.SetParent(GameObject.Find("UI").transform);
-        buttons.transform.position = GameObject.Find("UI").transform.position;
+        // buttons.transform.position = GameObject.Find("UI").transform.position + buttons.transform.position;
+        // buttons.transform.position = GameObject.Find("UI").transform.position;
     }
+
+    /*
     private void destroyObject(GameObject obj)
     {
         foreach (Transform child in obj.transform) {
@@ -54,6 +64,7 @@ public class UIHandler : MonoBehaviour {
         }
     }
 
+    
     //Destroy All the buttons
     public void destroyButtons(string button)
     {
@@ -66,14 +77,27 @@ public class UIHandler : MonoBehaviour {
 
         destroyObject(buttons);
     }
+    */
 
-    //After button, get slider
+    public void spawnNeuronSelectText()
+    {
+        neuronSelect = Instantiate(neuronSelectPrefab);
+        neuronSelect.name = "Neurons select Text Box";
+        neuronSelect.transform.SetParent(GameObject.Find("Camera").transform);
+    }
+
+    public void findNeuronPosition()
+    {
+        neuronSelect = Instantiate(neuronSelectPrefab);
+    }
+
     public void spawnSlider()
     {
         Debug.Log("slider has been spawned");
         slider = Instantiate(sliderPrefab, this.transform);
         slider.name = "Cube UI Slider Panel";
         slider.transform.SetParent(GameObject.Find("UI").transform);
+        // slider.transform.position = GameObject.Find("UI").transform.position + slider.transform.position;
     }
 
     public void spawnLayerBoxes()
@@ -89,6 +113,7 @@ public class UIHandler : MonoBehaviour {
         layerBoxes = new GameObject("LayerBoxes");
         layerBoxes.transform.position = layerBoxParent.transform.position;
 
+        //fix size (hard-coded for now)
         //for lim of 5 and 2 divs per layer
         //set Scales to (4, 7, 3)
         //z value depends on number of layer divs
@@ -106,32 +131,21 @@ public class UIHandler : MonoBehaviour {
 
     }
 
-    //Manzood + Sohan integration
-    //Do what they want here
-    public void callUpdate()
+    private void runPythonProcess(string cmd)
     {
-        string cmd;
-        switch (buttonType) {
-            case ButtonType.AddNeuron:
-                cmd = "add";
-                break;
-            case ButtonType.AddLayer:
-                cmd = "addLayer";
-                break;
-            default:
-                cmd = "not Supported";
-                break;
-        }
-        string args = string.Format("{0} {1} {2}", cmd, layer, numberOfNeurons);
         System.Diagnostics.Process p = new System.Diagnostics.Process();
         p.StartInfo = new System.Diagnostics.ProcessStartInfo();
         //check if works
+        //specific to my system
         p.StartInfo.FileName = "C:/My_Files/Dev/Anaconda3/envs/minimal_ds/python.exe";
         //p.StartInfo.RedirectStandardError = true;
-        p.StartInfo.Arguments = string.Format("{0} {1}", fileName, args);
+        p.StartInfo.Arguments = string.Format("{0} {1}", fileName, cmd);
         //p.StartInfo.RedirectStandardOutput = true;
         p.StartInfo.UseShellExecute = true;
         //p.StartInfo.CreateNoWindow = true;
+
+        Debug.Log("Sohan's part called\nCmd: " + p.StartInfo.FileName + " " + fileName + " " + cmd);
+
         //Debug.Log(p.StartInfo.Arguments);
         p.Start();
 
@@ -143,9 +157,32 @@ public class UIHandler : MonoBehaviour {
         Debug.Log(stringErrorOutput);
         */
 
-        // p.WaitForExit();
-
-        Debug.Log("Successfully called Sohan's part");
+        p.WaitForExit();
+    }
+    //Manzood + Sohan integration
+    //Do what they want here
+    public void callUpdate()
+    {
+        string args = "";
+        //add epoch number later
+        switch (buttonType) {
+            case ButtonType.AddNeuron:
+                args = string.Format("add {0} {1}", layer, numberOfNeurons);
+                break;
+            case ButtonType.AddLayer:
+                args = string.Format("addL {0} {1}", layer, numberOfNeurons);
+                break;
+            case ButtonType.DeleteNeuron:
+                args = string.Format("del {0} {1}", layer, neuronPosition);
+                break;
+            case ButtonType.DeleteLayer:
+                args = string.Format("delL {0}", layer);
+                break;
+            default:
+                Debug.LogError("Illegal button type");
+                break;
+        }
+        runPythonProcess(args);
 
         //Change model to new model
         //Incorporate in NeuronInstantiator
@@ -154,3 +191,4 @@ public class UIHandler : MonoBehaviour {
 
     }
 }
+

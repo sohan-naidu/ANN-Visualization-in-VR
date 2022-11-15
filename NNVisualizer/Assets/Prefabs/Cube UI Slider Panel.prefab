@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8009040811159452533}
-  - component: {fileID: 6542408959418027669}
+  - component: {fileID: 7560969140877492594}
   m_Layer: 0
   m_Name: Cube UI Slider Panel
   m_TagString: Untagged
@@ -24,8 +24,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8009040811159452532}
-  m_LocalRotation: {x: 0.22260779, y: -0, z: -0, w: 0.9749081}
-  m_LocalPosition: {x: 0, y: 0, z: 0.42078486}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -35,13 +35,13 @@ RectTransform:
   - {fileID: 8009040812342689060}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.009, y: -0.1725}
+  m_AnchoredPosition: {x: -0.2, y: 0}
   m_SizeDelta: {x: 0.45, y: 0.045}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6542408959418027669
+--- !u!114 &7560969140877492594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8009040811159452532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8faccaa1d8348f41a1998ac3df745b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 892526bb8e6863649aaaa63e0f0a5067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8009040811165479677
@@ -78,17 +78,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8009040811165479677}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.005099971}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0013}
   m_LocalScale: {x: 0.0052231243, y: 0.00875, z: 0.57142854}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8009040811159452533}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.2203, y: 0.023999987}
+  m_AnchoredPosition: {x: -0.21, y: -0.033}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8009040811165479648
@@ -251,7 +251,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8009040811706798424}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: 0.0009}
   m_LocalScale: {x: 0.032584533, y: 0.032584537, z: 0.009123394}
   m_ConstrainProportionsScale: 0
@@ -350,7 +350,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8009040811999851037}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.0046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -422,7 +422,7 @@ MonoBehaviour:
   _OnUnpress:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6542408959418027669}
+      - m_Target: {fileID: 7560969140877492594}
         m_TargetAssemblyTypeName: SliderHandler, Assembly-CSharp
         m_MethodName: destroySlider
         m_Mode: 1
@@ -439,7 +439,7 @@ MonoBehaviour:
   overrideRectLimits: 0
   _parentHasRectTransform: 1
   defaultHorizontalValue: 1
-  _horizontalValueRange: {x: 1, y: 20}
+  _horizontalValueRange: {x: 0, y: 19}
   horizontalSlideLimits: {x: -0.2075, y: 0.2075}
   horizontalSteps: 20
   _horizontalSlideEvent:
@@ -457,13 +457,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  defaultVerticalValue: 0
-  _verticalValueRange: {x: 0, y: 1}
+  defaultVerticalValue: 1
+  _verticalValueRange: {x: 1, y: 20}
   verticalSlideLimits: {x: -0.005000001, y: 0.005000001}
-  verticalSteps: 0
+  verticalSteps: 20
   _verticalSlideEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8009040812006852970}
+        m_TargetAssemblyTypeName: UpdateText, Assembly-CSharp
+        m_MethodName: updateValue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8009040811999851039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,17 +524,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8009040812006852968}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.15345345}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0.23}
   m_LocalScale: {x: 0.16029458, y: 0.26853228, z: 62.633327}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8009040811706798425}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.009206841, y: 0.7365474}
+  m_AnchoredPosition: {x: -0.17, y: -1.02}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8009040812006852972
@@ -668,10 +680,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8009040812006852968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae20f765e04a0574c983b5da8eec00fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 00600d9c4f3adbe49bd3d822fc9eda14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 8009040812006852971}
   slider: {fileID: 8009040811999851008}
 --- !u!1 &8009040812048513295
 GameObject:
@@ -796,14 +807,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8009040812125024550}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: -0.003}
-  m_LocalScale: {x: 0.45097366, y: 0.03937528, z: 0.002}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.000000029802, z: -0.003}
+  m_LocalScale: {x: 0.038220312, y: 0.4423618, z: 0.002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8009040811159452533}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &8009040812125024553
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -879,17 +890,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8009040812342689059}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.005099971}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0044}
   m_LocalScale: {x: 0.0052231243, y: 0.00875, z: 0.57142854}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8009040811159452533}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.2154, y: 0.023999987}
+  m_AnchoredPosition: {x: 0.204, y: -0.034}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8009040812342689062
