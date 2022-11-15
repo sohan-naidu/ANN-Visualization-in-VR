@@ -28,8 +28,6 @@ public class NNDiff : MonoBehaviour {
                 }
             }
         }
-        // TODO: comment the following line out
-        diff[0][0] = true;
         return diff;
     }
 }
