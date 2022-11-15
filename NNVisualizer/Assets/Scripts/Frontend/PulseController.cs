@@ -14,6 +14,7 @@ public class PulseController : MonoBehaviour
     bool sendPulse = false;
     private float moveSpeed = 0;
     public int numLayers = 0;
+    float elapsedTime;
 
     // TODO: read all the comments and incorporate changes
     // do it layer by layer: when the current positions array is empty, add the positions from the next layer into the array while there are still positions left
@@ -30,6 +31,7 @@ public class PulseController : MonoBehaviour
 
     void Start()
     {
+        elapsedTime = 0;
         positions = new List<List<Vector3>>();
         layerPositions = new List<List<Vector3>>();
         correspondingLayer = new List<int>();
@@ -45,6 +47,7 @@ public class PulseController : MonoBehaviour
         {
             runs++;
             Assert.IsTrue(runs < 100);
+            elapsedTime = 0;
             currentLayer--;
             if (currentLayer < 0) currentLayer += numLayers;
             for (int i = 0; i < positions.Count; i++) {
@@ -83,8 +86,15 @@ public class PulseController : MonoBehaviour
                     float stepSize = moveSpeed * Time.fixedDeltaTime;
                     directionToMove = directionToMove * stepSize;
                     float maxDistance = Vector3.Distance(trailObjects[i].transform.position, EndPoint);
-                    Vector3 distTravelled = Vector3.ClampMagnitude(directionToMove, maxDistance);
-                    trailObjects[i].transform.position = trailObjects[i].transform.position + Vector3.ClampMagnitude(directionToMove, maxDistance);
+                    //Vector3 distTravelled = Vector3.ClampMagnitude(directionToMove, maxDistance);
+                    //Vector3 LineDistanceVector = EndPoint - layerPositions[i][0];
+                    //float totalDistance = LineDistanceVector.magnitude;
+                    //float timeRatio = elapsedTime / 2.0f;
+                    //float expectedDistance = totalDistance * timeRatio;
+                    //float distanceThisFrame = expectedDistance - (trailObjects[i].transform.position - layerPositions[i][0]).magnitude;
+                    trailObjects[i].transform.position = trailObjects[i].transform.position + Vector3.ClampMagnitude((directionToMove * 8.0f), maxDistance);
+                    //trailObjects[i].transform.position = trailObjects[i].transform.position + Vector3.ClampMagnitude(directionToMove, distanceThisFrame);
+                    //trailObjects[i].transform.position = trailObjects[i].transform.position + (directionToMove * distanceThisFrame);
                 } else {
                     marked[i] = true;
                 } 
@@ -105,6 +115,8 @@ public class PulseController : MonoBehaviour
                     ++cur;
                 }
             }
+
+            elapsedTime += Time.deltaTime;
         }
     }
 }

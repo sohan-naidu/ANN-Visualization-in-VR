@@ -1,6 +1,7 @@
 // using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using Unity.Barracuda;
 using UnityEngine.Assertions;
 
@@ -11,6 +12,7 @@ public class NeuronInstantiator : MonoBehaviour {
 
     // neural network models
     private Model model; // loads up Model
+    private Model prevModel; // loads up Model
     public NNModel Model;
     public NNModel testInputModel;
     public NNModel testChangedModel;
@@ -25,6 +27,7 @@ public class NeuronInstantiator : MonoBehaviour {
     List<List<Vector3>> sphereCenters = new List<List<Vector3>>();
 
     // keeps track of elapsed time
+    public int currentEpoch;
     float elapsedTime;
 
     public class NNCube {
@@ -217,10 +220,33 @@ public class NeuronInstantiator : MonoBehaviour {
         }
     }
 
+    private Model getNextModel()
+    {
+        NNModel Model;
+        string epochNumber = "epoch_" + currentEpoch.ToString() + ".onnx";
+        Model = (NNModel)AssetDatabase.LoadAssetAtPath("Assets/Scripts/Backend/epochs/" + epochNumber, typeof(NNModel));
+        if (Model == null) { 
+            Debug.Log("Could not find next model");
+            return null;
+        }
+        Model newModel;
+        newModel = ModelLoader.Load(Model);
+        Debug.Log("Starting Epoch number " + currentEpoch);
+        currentEpoch += 5;
+        return newModel;
+    }
+
     // should be called to check for every update to the network
     public void InstantiateNetwork()
     {
-        model = ModelLoader.Load(Model);
+        prevModel = model;
+        model = getNextModel();
+        if (model == null)
+        {
+            // return because there are no changes to be made
+            return;
+        }
+        SendPulses(Generate_Weights(prevModel), Generate_Weights(model));
         sphereCenters = new List<List<Vector3>>();
         List<int> layersToBeDrawn = new List<int>();
         List<float[]> weights = Generate_Weights(model);
@@ -265,7 +291,7 @@ public class NeuronInstantiator : MonoBehaviour {
                         tempList.Add(sphereCenters[i][j]);
                         finalList.Add(tempList);
                         correspondingLayer.Add(i + 1);
-                        Debug.Log("Sending pulse from (" + i.ToString() + ", " + j.ToString() + ") to (" + ( i + 1 ).ToString() + ", " + k.ToString() + ")");
+                        // Debug.Log("Sending pulse from (" + i.ToString() + ", " + j.ToString() + ") to (" + ( i + 1 ).ToString() + ", " + k.ToString() + ")");
                     }
                 }
             }
@@ -276,6 +302,7 @@ public class NeuronInstantiator : MonoBehaviour {
     void Start()
     {
         elapsedTime = 0;
+        currentEpoch = 0;
         LayerParentGameObject = new GameObject("Layer Parent");
         LayerParentGameObject.transform.position = new Vector3(0, 0, 0);
         LayerParentGameObject.transform.rotation = Quaternion.identity;
@@ -288,7 +315,7 @@ public class NeuronInstantiator : MonoBehaviour {
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime >= 10.0f) {
+        if (elapsedTime >= 5.0f) {
             elapsedTime = 0;
             // check for updates
             //List<float[]> oldWeights = Generate_Weights(model);
@@ -298,9 +325,8 @@ public class NeuronInstantiator : MonoBehaviour {
             //GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
             InstantiateNetwork();
             // SendPulses(oldWeights, Generate_Weights(model));
-            Model testOldModel = ModelLoader.Load(testInputModel);
-            Model testUpdatedModel = ModelLoader.Load(testChangedModel);
-            SendPulses(Generate_Weights(testOldModel), Generate_Weights(testUpdatedModel));
+            //Model testOldModel = ModelLoader.Load(testInputModel);
+            //Model testUpdatedModel = ModelLoader.Load(testChangedModel);
         }
     }
 }
