@@ -10,8 +10,7 @@ class convertToONNX:
     def convert(self):
         try:
             os.chdir(self.source)
-            model = models.load_model(self.fileName)
-            tf2onnx.convert.from_keras(model, output_path = os.path.dirname(os.path.abspath(__file__)) + "/../output/input.onnx")
-            print("Successfully converted to ONNX.")
+            model = models.load_model(self.fileName + ".h5")
+            tf2onnx.convert.from_keras(model, output_path = os.path.dirname(os.path.abspath(__file__)) + "/../epochs/" + self.fileName + ".onnx")
         except Exception as e:
             print("Failed.\n" + str(e))

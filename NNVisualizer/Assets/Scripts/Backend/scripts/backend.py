@@ -1,42 +1,53 @@
-#import sys
-import os
 import argparse
-from convertToONNX import convertToONNX as cto
+from init import initialize
 from neurons import neurons
 from layers import layers
-from init import init
-
+from convertToONNX import convertToONNX as cto
+from keras import models
+import os
+from train import train
+from reset import reset
+    
 class backend:
-    def __init__(self, op, x, y):
-        self.op = op
-        self.x = x
-        self.y = y
+    def parse(self):
+        parser = argparse.ArgumentParser(description = "Backend argument parser.")
+        parser.add_argument("-i", action = 'store_true')
+        parser.add_argument("-r", action = 'store_true')
+        args, unknown = parser.parse_known_args()
+        cur = 5
+    
+        if(vars(args)['r']):
+            reset().reset()
 
-    def do(self):
-        neuron = neurons(self.op, self.x, self.y)
-        converter = cto("input.h5", os.path.dirname(os.path.abspath(__file__)) + '/../output/')
-        layer = layers(self.op, self.x, self.y)
-        if(self.op == "add"):
-            #if(self.op == "add"):
-            neuron.modify(1)
-            #else:
-                #neuron.modify(0)
+        elif(vars(args)['i']):
+            initialize().initialize()
+            for _ in range(10):
+                curname = "epoch_" + str(cur)
+                trainer = train()
+                trainer.train(curname)
+                cur += 5
         else:
-            layer.modify()
-        
-        converter.convert()
+            parser.add_argument('op', type = str, help = 'Operation that needs to be done in backend.')
+            parser.add_argument('x', type = int, help = 'Layer index.')
+            parser.add_argument('y', type = int, help = 'Number of neurons/Neuron position.')
+            parser.add_argument("epoch", type = int, help = "Epoch number from which the onnx files need to be rewritten")
+            args = parser.parse_args()
+            cur = args.epoch
+            curname = "epoch_" + str(cur)
+            #backend_ = backend(args.op, args.x, args.y, curname)
+            if(args.op == "add" or args.op == "del"):
+                neurons(args.op, args.x, args.y, curname).modify()
+            else:
+                layers(args.op, args.x, args.y, curname).modify()
+            for i in range(11):
+                curname = "epoch_" + str(cur)
+                trainer = train()
+                if(i == 0):
+                    trainer.train(curname, True)
+                else:
+                    trainer.train(curname)
+                cur += 5
+
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description = "Backend argument parser.")
-    parser.add_argument('op', type = str, help = 'Operation that needs to be done in backend.')
-    parser.add_argument('x', type = int, help = 'Layer index.')
-    parser.add_argument('y', type = int, help = 'Number of neurons.')
-    parser.add_argument('-r', action = 'store_true', help = 'Pass this argument to run init.py to reset model.')
-    args = parser.parse_args()
-
-    if(args.r):
-        inst = init()
-        inst.reset()
-    
-    back = backend(args.op, args.x, args.y)
-    back.do()
+    backend().parse()

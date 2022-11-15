@@ -1,0 +1,50 @@
+Commands : 
+
+a) Initalizing the backend : 
+
+Make sure to have the dataset amd the json file in the input folder
+
+    python backend.py -i <filename.json> [-r]
+
+    Example json file :
+    {
+        "datasetPath" : string,
+        "targets" : ['price'],
+        "layerCount" : 3,
+        "neuronsCount" : [5, 7, 1] 
+    }
+
+    "x", "y", "layerCount" and "neuronsCount" must always be the name of the keys
+    "layerCount" is a single integer denoting the number of layers required in the model
+    "neuronsCount" is a list with number of neurons in each of the layers
+    len(neuronsCount) == layerCount must hold true
+
+
+b) Neurons
+
+    python backend.py add x y [-r]
+
+    x : layer index (0 based, can't add to input and output layer)
+    y : Number of neurons that need to be added to that layer 
+
+
+    python backend.py del x y [-r]
+    x : layer index (0 based, can't add to input and output layer)
+    y : neuron position (0 indexed, from top to bottom)
+
+
+c) Layers
+
+    python backend.py addL x y [-r]
+    x : layer index (0 based, can't add new input or output layer)
+    y : Number of neurons that need to be added to that layer 
+
+    python backend.py delL x [-r]
+    x : layer index (0 based, can't add new input or output layer)
+
+
+b) Reset :
+    python backend.py -r 
+    Basically just add -r to whatever backend command 
+
+
