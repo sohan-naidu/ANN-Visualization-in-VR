@@ -1,13 +1,16 @@
 using UnityEngine;
 using Leap;
 using Leap.Unity;
+using UnityEngine.XR;
 
 public class Movement : MonoBehaviour {
     // Start is called before the first frame update
 
     public Camera head;
+    private CharacterController character;
     void Start()
     {
+        character = GetComponent<CharacterController>();
         Debug.DrawLine(Vector3.zero, new Vector3(5, 0, 0), Color.black, 2.5f);
     }
 
@@ -43,7 +46,8 @@ public class Movement : MonoBehaviour {
 
                 //guard for hands being very close
                 //if (moveMagnitude >= 0.05) {
-                head.transform.position = head.transform.position + moveDirection * scale;
+                character.Move(moveDirection * scale);
+                //head.transform.position = head.transform.position + moveDirection * scale;
                 //}
 
                 //You move away from the pinched position if your rightHand moves towards you

@@ -21,6 +21,7 @@ public class SliderHandler : MonoBehaviour {
         //after slider -> choose layer (during Add Neuron/Layer)
         handler.spawnLayerBoxes();
 
-        Destroy(GameObject.Find("Cube UI Slider Panel"));
+        Destroy(this.gameObject);
+        //Destroy(GameObject.Find("Cube UI Slider Panel"));
     }
 }

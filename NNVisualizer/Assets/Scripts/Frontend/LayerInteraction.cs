@@ -39,7 +39,7 @@ public class LayerInteraction : MonoBehaviour {
         UIHandler _UIobj = GameObject.Find("UI").GetComponent<UIHandler>();
         _UIobj.layer = layerNum;
 
-        GameObject _LayerBoxesobj = GameObject.Find("LayerBoxes");
+        GameObject _LayerBoxesobj = GameObject.Find("Layer Boxes");
         if (_LayerBoxesobj != null)
             Destroy(_LayerBoxesobj);
         // Destroy(GameObject.Find("Layer Parent"));
