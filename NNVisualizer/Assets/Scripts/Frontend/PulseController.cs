@@ -14,7 +14,6 @@ public class PulseController : MonoBehaviour
     bool sendPulse = false;
     private float moveSpeed = 0;
     public int numLayers = 0;
-    float elapsedTime;
 
     // TODO: read all the comments and incorporate changes
     // do it layer by layer: when the current positions array is empty, add the positions from the next layer into the array while there are still positions left
@@ -31,7 +30,6 @@ public class PulseController : MonoBehaviour
 
     void Start()
     {
-        elapsedTime = 0;
         positions = new List<List<Vector3>>();
         layerPositions = new List<List<Vector3>>();
         correspondingLayer = new List<int>();
@@ -41,20 +39,39 @@ public class PulseController : MonoBehaviour
     {
         if (numLayers <= 0) return;
 
-        // TODO: make an assertion to ensure that we're not stuck in an infinite loop
+        if (positions.Count == 0)
+        {
+            this.GetComponentInParent<NeuronInstantiator>().InstantiateNetwork();
+        }
+
         int runs = 0;
+        List<bool> tempMarked = new List<bool>(new bool[positions.Count]);
         while (positions.Count > 0 && layerPositions.Count == 0)
         {
             runs++;
             Assert.IsTrue(runs < 100);
-            elapsedTime = 0;
             currentLayer--;
             if (currentLayer < 0) currentLayer += numLayers;
             for (int i = 0; i < positions.Count; i++) {
                 if (correspondingLayer[i] == currentLayer)
                 {
                     layerPositions.Add(positions[i]);
+                    tempMarked[i] = true;
                 }
+            }
+        }
+
+        int tmp = 0;
+        while (tmp < positions.Count) 
+        {
+            if (tempMarked[tmp])
+            {
+                tempMarked.RemoveAt(tmp);
+                positions.RemoveAt(tmp);
+            }
+            else
+            {
+                tmp++;
             }
         }
 
@@ -116,7 +133,6 @@ public class PulseController : MonoBehaviour
                 }
             }
 
-            elapsedTime += Time.deltaTime;
         }
     }
 }

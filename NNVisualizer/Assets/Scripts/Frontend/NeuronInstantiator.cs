@@ -246,7 +246,6 @@ public class NeuronInstantiator : MonoBehaviour {
             // return because there are no changes to be made
             return;
         }
-        SendPulses(Generate_Weights(prevModel), Generate_Weights(model));
         sphereCenters = new List<List<Vector3>>();
         List<int> layersToBeDrawn = new List<int>();
         List<float[]> weights = Generate_Weights(model);
@@ -271,6 +270,7 @@ public class NeuronInstantiator : MonoBehaviour {
         Spawn_Neurons(ref layersToBeDrawn);
         //Create_Layer_Objects(ref layersToBeDrawn);
         Spawn_Weights(ref weights);
+        SendPulses(Generate_Weights(prevModel), Generate_Weights(model));
     }
 
     // ideally, should compare two neural networks to see changes/differences, and then send pulses to the ones that have been changed
@@ -321,10 +321,8 @@ public class NeuronInstantiator : MonoBehaviour {
             //List<float[]> oldWeights = Generate_Weights(model);
             // get a diff between both models
             // update the weights (also do layers at some point)
-            // SendPulses(model, updatedModel);
             //GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
-            InstantiateNetwork();
-            // SendPulses(oldWeights, Generate_Weights(model));
+            //InstantiateNetwork();
             //Model testOldModel = ModelLoader.Load(testInputModel);
             //Model testUpdatedModel = ModelLoader.Load(testChangedModel);
         }
