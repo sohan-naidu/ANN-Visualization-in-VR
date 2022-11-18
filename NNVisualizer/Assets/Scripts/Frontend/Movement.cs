@@ -7,10 +7,9 @@ public class Movement : MonoBehaviour {
     // Start is called before the first frame update
 
     public Camera head;
-    private CharacterController character;
+    public GameObject headParent;
     void Start()
     {
-        character = GetComponent<CharacterController>();
         Debug.DrawLine(Vector3.zero, new Vector3(5, 0, 0), Color.black, 2.5f);
     }
 
@@ -41,12 +40,12 @@ public class Movement : MonoBehaviour {
                 float scale = 0.3f;
                 float moveMagnitude = Mathf.Abs(moveDirection.magnitude);
 
-                Debug.Log("Left Vector: " + leftVector + "\nRight Vector: " + rightVector + "\nMove direction: " + moveDirection.ToString() + "\nHead position" + head.transform.position.ToString());
+                Debug.Log("Left Vector: " + leftVector + "\nRight Vector: " + rightVector + "\nMove direction: " + moveDirection.ToString() + "\nHead position" + headParent.transform.position.ToString());
                 // Debug.Log("Move direction: " + moveDirection.ToString() + "\nHead position" + head.transform.position.ToString());
 
                 //guard for hands being very close
                 //if (moveMagnitude >= 0.05) {
-                character.Move(moveDirection * scale);
+                headParent.transform.position = headParent.transform.position + moveDirection * scale;
                 //head.transform.position = head.transform.position + moveDirection * scale;
                 //}
 

@@ -2666,6 +2666,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c56b19094fc5134991b6508068246d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 1114292136}
+  headParent: {fileID: 275423705}
 --- !u!1 &307443816
 GameObject:
   m_ObjectHideFlags: 0
@@ -18000,6 +18002,16 @@ PrefabInstance:
       propertyPath: _mainCamera
       value: 
       objectReference: {fileID: 1114292136}
+    - target: {fileID: 3557434566810426996, guid: 15d3b5cf5cea75344a4482323bc124a8,
+        type: 3}
+      propertyPath: FOV_Visualization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3557434566810426996, guid: 15d3b5cf5cea75344a4482323bc124a8,
+        type: 3}
+      propertyPath: _deviceOffsetMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3557434566810426997, guid: 15d3b5cf5cea75344a4482323bc124a8,
         type: 3}
       propertyPath: m_Name

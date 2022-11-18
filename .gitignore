@@ -76,3 +76,4 @@ __pycache__/
 
 # All meta files
 *.meta
+!NNVisualizer/[Aa]ssets/**/*.meta
