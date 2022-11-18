@@ -28,6 +28,17 @@ public class PulseController : MonoBehaviour
         moveSpeed = moveSpeedVal;
     }
 
+    public void Clean_Up()
+    {
+        for (int i = 0; i < trailObjects.Count; i++)
+            Destroy(trailObjects[i]);
+        if (layerPositions != null) layerPositions.Clear();
+        if (positions != null) positions.Clear();
+        if (correspondingLayer != null) correspondingLayer.Clear();
+        currentLayer = 0;
+        numLayers = 0;
+    }
+
     void Start()
     {
         positions = new List<List<Vector3>>();
@@ -39,11 +50,6 @@ public class PulseController : MonoBehaviour
     {
         if (numLayers <= 0) return;
 
-        if (positions.Count == 0)
-        {
-            this.GetComponentInParent<NeuronInstantiator>().InstantiateNetwork();
-        }
-
         int runs = 0;
         List<bool> tempMarked = new List<bool>(new bool[positions.Count]);
         while (positions.Count > 0 && layerPositions.Count == 0)
@@ -52,7 +58,8 @@ public class PulseController : MonoBehaviour
             Assert.IsTrue(runs < 100);
             currentLayer--;
             if (currentLayer < 0) currentLayer += numLayers;
-            for (int i = 0; i < positions.Count; i++) {
+            for (int i = 0; i < positions.Count; i++)
+            {
                 if (correspondingLayer[i] == currentLayer)
                 {
                     layerPositions.Add(positions[i]);
@@ -61,8 +68,13 @@ public class PulseController : MonoBehaviour
             }
         }
 
+        if (positions.Count == 0 && layerPositions.Count == 0)
+        {
+            this.GetComponentInParent<NeuronInstantiator>().InstantiateNetwork();
+        }
+
         int tmp = 0;
-        while (tmp < positions.Count) 
+        while (tmp < positions.Count)
         {
             if (tempMarked[tmp])
             {
@@ -100,7 +112,7 @@ public class PulseController : MonoBehaviour
                 {
                     Vector3 directionToMove = EndPoint - trailObjects[i].transform.position;
                     directionToMove = directionToMove.normalized;
-                    float stepSize = moveSpeed * Time.fixedDeltaTime;
+                    float stepSize = moveSpeed * Time.deltaTime;
                     directionToMove = directionToMove * stepSize;
                     float maxDistance = Vector3.Distance(trailObjects[i].transform.position, EndPoint);
                     //Vector3 distTravelled = Vector3.ClampMagnitude(directionToMove, maxDistance);
@@ -109,25 +121,27 @@ public class PulseController : MonoBehaviour
                     //float timeRatio = elapsedTime / 2.0f;
                     //float expectedDistance = totalDistance * timeRatio;
                     //float distanceThisFrame = expectedDistance - (trailObjects[i].transform.position - layerPositions[i][0]).magnitude;
-                    trailObjects[i].transform.position = trailObjects[i].transform.position + Vector3.ClampMagnitude((directionToMove * 8.0f), maxDistance);
+                    trailObjects[i].transform.position = trailObjects[i].transform.position + Vector3.ClampMagnitude((directionToMove * 12.0f), maxDistance);
                     //trailObjects[i].transform.position = trailObjects[i].transform.position + Vector3.ClampMagnitude(directionToMove, distanceThisFrame);
                     //trailObjects[i].transform.position = trailObjects[i].transform.position + (directionToMove * distanceThisFrame);
-                } else {
+                }
+                else
+                {
                     marked[i] = true;
-                } 
+                }
             }
 
             int cur = 0;
             while (cur < trailObjects.Count)
             {
-                if (marked[cur]) 
+                if (marked[cur])
                 {
                     Destroy(trailObjects[cur]);
                     marked.RemoveAt(cur);
                     trailObjects.RemoveAt(cur);
                     layerPositions.RemoveAt(cur); // make this happen one layer at a time
-                } 
-                else 
+                }
+                else
                 {
                     ++cur;
                 }

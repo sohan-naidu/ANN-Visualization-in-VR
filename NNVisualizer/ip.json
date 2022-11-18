@@ -1,1 +1,1 @@
-{"datasetPath":"dataset.csv","targetVariables":["price"],"layerCount":3,"neuronsPerLayer":[5,7,1]}
+{"datasetPath":"dataset.csv","targets":[],"layerCount":0,"neuronsCount":[]}

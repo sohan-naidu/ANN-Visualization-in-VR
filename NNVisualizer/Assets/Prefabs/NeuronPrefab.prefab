@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 6224608046307166049}
   - component: {fileID: 7658140328675867243}
   - component: {fileID: 1892276591126467024}
-  - component: {fileID: 7286945479477939435}
   - component: {fileID: 1337487302211704709}
   - component: {fileID: 1617028746431467943}
   - component: {fileID: 292718338026792939}
+  - component: {fileID: 6092243825148374342}
   m_Layer: 6
   m_Name: NeuronButton
   m_TagString: Untagged
@@ -121,20 +121,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7286945479477939435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629866799871114954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c67663c5bd0e71f449e5c8cc60019988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layer: 0
-  neuronPosition: 0
 --- !u!114 &1337487302211704709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,12 +130,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1629866799871114954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Script: {fileID: 11500000, guid: f6ca2a5cd852849468cf16aa8e578eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 0.8867924, g: 0.13720179, b: 0.13720179, a: 1}
-  outlineWidth: 15
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -203,6 +189,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6092243825148374342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629866799871114954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab72dc7d88775f47a75a3db28d005bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer: 0
+  neuronPosition: 0
 --- !u!1 &3364334951021942074
 GameObject:
   m_ObjectHideFlags: 0

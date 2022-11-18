@@ -823,16 +823,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 72249389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07e8c77c7e7fe1f41ace6da109327c6f, type: 3}
+  m_Script: {fileID: 11500000, guid: c70c8792ac6919042a85fe2bdd66a772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   neuronPrefab: {fileID: 3364334951021942074, guid: 195e66f4107640949a7bb755813ec637,
     type: 3}
-  lineMaterial: {fileID: 2100000, guid: 8b5e64e4e5cc9f34ba2986559413572f, type: 2}
-  Model: {fileID: 5022602860645237092, guid: cb1dde0356456f24b9dcfe7291d931b1, type: 3}
-  testInputModel: {fileID: 5022602860645237092, guid: cb1dde0356456f24b9dcfe7291d931b1,
+  lineMaterial: {fileID: 2100000, guid: 2b34477abf409ce4daa3c1b1a641a4b4, type: 2}
+  Model: {fileID: 5022602860645237092, guid: 2ccd621447bb7b7499831604c07664f2, type: 3}
+  testInputModel: {fileID: 5022602860645237092, guid: 2600c077d4b863c478b10d0e5c63ae0b,
     type: 3}
-  testChangedModel: {fileID: 5022602860645237092, guid: 3092f969b83710f43b046b9abf1deef3,
+  testChangedModel: {fileID: 5022602860645237092, guid: 2e7be8f03c985bb4d95cd753071b6ed0,
     type: 3}
   NeuralNetWorkSpawner: {fileID: 72249389}
   layerObjects: []
@@ -861,7 +861,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 72249389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0da863a0a00ddb848adb53f2be82daed, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c22f4e75bc777f4e874c8aa0181a792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NNPulsePrefab: {fileID: 4580893857930480442, guid: fcbaa20fbef07b44c8a02d8b9ca3a837,
@@ -876,7 +876,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 72249389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aecec3df47b7bb44bb3701331d3030ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 538c74df9f4ee18488b77a87bca83167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NeuralNetworkSpawner: {fileID: 72249389}
@@ -2666,7 +2666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c56b19094fc5134991b6508068246d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: {fileID: 1114292136}
 --- !u!1 &307443816
 GameObject:
   m_ObjectHideFlags: 0
@@ -2982,16 +2981,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57bc3ad4a3cd9e4690b452ed34cbe9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1574198896}
-  _hoverEnabled: 1
-  _contactEnabled: 1
-  _graspingEnabled: 1
-  _leapProvider: {fileID: 1755709240}
-  _handDataMode: 1
-  enabledPrimaryHoverFingertips: 0101010000
-  headTransform: {fileID: 0}
-  projectionScale: 10
-  handMergeDistance: 0.35
 --- !u!1 &342588008
 GameObject:
   m_ObjectHideFlags: 0
@@ -5892,20 +5881,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33464f669ff0664b905c60c7e656ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: {fileID: 1114292136}
-  sliderPrefab: {fileID: 8009040811159452532, guid: aebd57174253bfd4c8e444d161161b4d,
-    type: 3}
-  UIButtonsPrefab: {fileID: 923480779584915908, guid: 4f9253211025c4244a69196a0dc7a7a4,
-    type: 3}
-  layerBoxPrefab: {fileID: 3190679617934092921, guid: 973d3d020a0ae18429bcc5e0da835a63,
-    type: 3}
-  neuronSelectPrefab: {fileID: 1624331496570366848, guid: d8814b2c7ae17284491fa44ffcfd7ac0,
-    type: 3}
-  neuronSelect: {fileID: 0}
-  buttonType: 0
-  numberOfNeurons: 0
-  layer: 0
-  neuronPosition: 0
 --- !u!1 &730479318
 GameObject:
   m_ObjectHideFlags: 0
@@ -8701,15 +8676,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996285926}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ce2b0de6f619d842b320116f45a4217, type: 3}
+  m_Script: {fileID: 11500000, guid: 3aa213ff0f1f87045aa3df760000cc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  datasetFolderPath: C:\My_Files\Uni\Capstone\Implementation\NNVisualizer\Assets\Scripts\Backend\input\
-  targetVariables:
-  - price
-  neuronsPerLayer: 050000000700000001000000
+  datasetFolderPath: 
+  targetVariables: []
+  neuronsPerLayer: 
 --- !u!4 &996285928
 Transform:
   m_ObjectHideFlags: 0
@@ -9475,16 +9449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57bc3ad4a3cd9e4690b452ed34cbe9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1574198896}
-  _hoverEnabled: 1
-  _contactEnabled: 1
-  _graspingEnabled: 1
-  _leapProvider: {fileID: 1755709240}
-  _handDataMode: 0
-  enabledPrimaryHoverFingertips: 0101010000
-  headTransform: {fileID: 0}
-  projectionScale: 10
-  handMergeDistance: 0.35
 --- !u!4 &1097602874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8844986755636336731, guid: 4577231256ebec149ac8882d93c98cda,
@@ -13251,7 +13215,7 @@ PrefabInstance:
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9548735
+      value: 0.95487344
       objectReference: {fileID: 0}
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
@@ -15433,7 +15397,7 @@ PrefabInstance:
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9548735
+      value: 0.95487344
       objectReference: {fileID: 0}
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
@@ -19010,18 +18974,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572525886}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1574198896 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114892109605653334, guid: 33edf201cbc6fe645ad9078697cd2aea,
-    type: 3}
-  m_PrefabInstance: {fileID: 61036863}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2018134121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0625e574c0d47a241b7dfc7a8c67ca2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1589699981
 GameObject:
   m_ObjectHideFlags: 0
@@ -19553,13 +19505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbda7de48bfb0b48a25bcadf6591bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editTimePose: 1
-  _inputLeapProvider: {fileID: 1755709240}
-  dataUpdateMode: 0
-  passthroughOnly: 0
-  headTransform: {fileID: 1114292133}
-  projectionScale: 10
-  handMergeDistance: 0.35
 --- !u!1 &1648901579
 GameObject:
   m_ObjectHideFlags: 0
@@ -23570,13 +23515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbda7de48bfb0b48a25bcadf6591bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editTimePose: 1
-  _inputLeapProvider: {fileID: 1755709240}
-  dataUpdateMode: 0
-  passthroughOnly: 0
-  headTransform: {fileID: 1114292133}
-  projectionScale: 10
-  handMergeDistance: 0.35
 --- !u!1 &2025137176
 GameObject:
   m_ObjectHideFlags: 0

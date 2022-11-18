@@ -5,7 +5,8 @@ using UnityEditor;
 using Unity.Barracuda;
 using UnityEngine.Assertions;
 
-public class NeuronInstantiator : MonoBehaviour {
+public class NeuronInstantiator : MonoBehaviour
+{
     // Prefabs and Materials
     public GameObject neuronPrefab;
     public Material lineMaterial;
@@ -30,7 +31,8 @@ public class NeuronInstantiator : MonoBehaviour {
     public int currentEpoch;
     float elapsedTime;
 
-    public class NNCube {
+    public class NNCube
+    {
         public float height;
         public float width;
         public float length;
@@ -49,17 +51,19 @@ public class NeuronInstantiator : MonoBehaviour {
             this.cubeCenter = cubeCenter;
 
             float neuronRadius = neuronPrefab.transform.localScale.x;
-            jumpLength.x = ( this.length - ( 2 * neuronRadius ) ) / ( this.neuronsCountLimit - 1 );
-            jumpLength.y = ( this.height - ( 2 * neuronRadius ) ) / ( this.neuronsCountLimit - 1 );
-            jumpLength.z = ( this.width - ( 2 * neuronRadius ) ) / ( this.neuronsCountLimit - 1 );
+            jumpLength.x = (this.length - (2 * neuronRadius)) / (this.neuronsCountLimit - 1);
+            jumpLength.y = (this.height - (2 * neuronRadius)) / (this.neuronsCountLimit - 1);
+            jumpLength.z = (this.width - (2 * neuronRadius)) / (this.neuronsCountLimit - 1);
         }
     }
 
     public List<float[]> Generate_Weights(Model currentNNModel)
     {
         List<float[]> weights = new List<float[]>();
-        foreach (var layer in currentNNModel.layers) {
-            if (layer.type == Unity.Barracuda.Layer.Type.Dense) {
+        foreach (var layer in currentNNModel.layers)
+        {
+            if (layer.type == Unity.Barracuda.Layer.Type.Dense)
+            {
                 var currentTensor = layer.DataSetToTensor(0);
                 weights.Add(currentTensor.data.Download(currentTensor.shape));
             }
@@ -84,18 +88,21 @@ public class NeuronInstantiator : MonoBehaviour {
 
         sphereReferences = new List<List<GameObject>>();
         emptyGameObjects = new List<List<List<GameObject>>>();
+        sphereCenters = new List<List<Vector3>>();
+        //this.GetComponentInParent<PulseController>().Clean_Up();
     }
 
     private void Spawn_Vertically(float x, float z, int numberOfNeurons, int layer, NNCube cube, int numberOfNeuronsDrawn)
     {
         // jump by a certain amount
-        float lowestPosition = cube.cubeCenter.y - ( cube.jumpLength.y * ( numberOfNeurons / 2 ) );
+        float lowestPosition = cube.cubeCenter.y - (cube.jumpLength.y * (numberOfNeurons / 2));
         if (numberOfNeurons % 2 == 0)
             lowestPosition += cube.jumpLength.y / 2;
 
         float curY = lowestPosition;
 
-        for (int i = 0; i < numberOfNeurons; i++) {
+        for (int i = 0; i < numberOfNeurons; i++)
+        {
             // spawn a neuron at this position
             Vector3 currentPosition = new Vector3(x, curY, z);
 
@@ -125,11 +132,12 @@ public class NeuronInstantiator : MonoBehaviour {
         int verticalSpaceLimit = 10;
         cube = new NNCube(cubeDimensions, verticalSpaceLimit, neuronsCountLimit, NNCenter, neuronPrefab);
 
-        int layersToTheLeft = ( layersToBeDrawn.Count % 2 == 1 ) ? layersToBeDrawn.Count / 2 : layersToBeDrawn.Count / 2 - 1;
+        int layersToTheLeft = (layersToBeDrawn.Count % 2 == 1) ? layersToBeDrawn.Count / 2 : layersToBeDrawn.Count / 2 - 1;
         Vector3 toSubtract = new Vector3(3.0f * layersToTheLeft, maxDrawSpaceHeight, maxDepth);
         Vector3 currentPosition = NNCenter - toSubtract;
 
-        for (int layer = 0; layer < layersToBeDrawn.Count; layer++) {
+        for (int layer = 0; layer < layersToBeDrawn.Count; layer++)
+        {
             sphereCenters.Add(new List<Vector3>());
             sphereReferences.Add(new List<GameObject>());
             emptyGameObjects.Add(new List<List<GameObject>>());
@@ -142,16 +150,19 @@ public class NeuronInstantiator : MonoBehaviour {
             currentPosition.z = NNCenter.z - toSubtract.z;
 
             int batchSize = layersToBeDrawn[layer];
-            if (batchSize > cube.neuronsCountLimit) {
+            if (batchSize > cube.neuronsCountLimit)
+            {
                 // find a better batchSize
-                int best = cube.neuronsCountLimit - ( layersToBeDrawn[layer] % cube.neuronsCountLimit );
+                int best = cube.neuronsCountLimit - (layersToBeDrawn[layer] % cube.neuronsCountLimit);
                 if (best == cube.neuronsCountLimit)
                     best = 0;
-                for (int i = cube.neuronsCountLimit - 1; i >= 2; i--) {
-                    int val = i - ( layersToBeDrawn[layer] % i );
+                for (int i = cube.neuronsCountLimit - 1; i >= 2; i--)
+                {
+                    int val = i - (layersToBeDrawn[layer] % i);
                     if (val == i)
                         val = 0;
-                    if (val < best) {
+                    if (val < best)
+                    {
                         batchSize = i;
                         best = val;
                     }
@@ -162,12 +173,13 @@ public class NeuronInstantiator : MonoBehaviour {
             if (layersToBeDrawn[layer] % batchSize > 0)
                 columnsAlongZAxis++;
 
-            currentPosition.z -= ( cube.jumpLength.z * ( columnsAlongZAxis / 2 ) );
+            currentPosition.z -= (cube.jumpLength.z * (columnsAlongZAxis / 2));
             if (columnsAlongZAxis % 2 == 0)
                 currentPosition.z += cube.jumpLength.z / 2;
 
             int rem = layersToBeDrawn[layer];
-            while (rem > 0) {
+            while (rem > 0)
+            {
                 Spawn_Vertically(currentPosition.x, currentPosition.z, Mathf.Min(rem, batchSize), layer, cube, layersToBeDrawn[layer] - rem);
                 rem -= batchSize;
                 currentPosition.z += cube.jumpLength.z;
@@ -183,10 +195,13 @@ public class NeuronInstantiator : MonoBehaviour {
     private void Spawn_Weights(ref List<float[]> weights)
     {
         // LOGIC FOR REPRESENTING WEIGHTS
-        for (int i = 1; i < sphereReferences.Count; i++) {
-            for (int j = 0; j < sphereReferences[i].Count; j++) {
-                for (int k = 0; k < sphereReferences[i - 1].Count; k++) {
-                    GameObject temp = new GameObject("Line between (" + ( i - 1 ).ToString() + ", " + k.ToString() + ") and (" + ( i ).ToString() + ", " + j.ToString() + ")");
+        for (int i = 1; i < sphereReferences.Count; i++)
+        {
+            for (int j = 0; j < sphereReferences[i].Count; j++)
+            {
+                for (int k = 0; k < sphereReferences[i - 1].Count; k++)
+                {
+                    GameObject temp = new GameObject("Line between (" + (i - 1).ToString() + ", " + k.ToString() + ") and (" + (i).ToString() + ", " + j.ToString() + ")");
                     temp.AddComponent<LineRenderer>();
                     emptyGameObjects[i][j].Add(temp);
                     emptyGameObjects[i][j][k].transform.parent = NeuralNetWorkSpawner.transform;
@@ -195,14 +210,17 @@ public class NeuronInstantiator : MonoBehaviour {
         }
 
         // getting a list of points between which to draw the respective lines
-        for (int i = 1; i < sphereCenters.Count; i++) {
-            for (int j = 0; j < sphereCenters[i].Count; j++) {
+        for (int i = 1; i < sphereCenters.Count; i++)
+        {
+            for (int j = 0; j < sphereCenters[i].Count; j++)
+            {
                 Vector3 firstCenter = sphereCenters[i][j];
                 // access the lineRenderer for each sphere
                 // GameObject reference = sphereReferences[i][j];
-                for (int k = 0; k < sphereCenters[i - 1].Count; k++) {
+                for (int k = 0; k < sphereCenters[i - 1].Count; k++)
+                {
                     LineRenderer lineRenderer = emptyGameObjects[i][j][k].GetComponent<LineRenderer>();
-                    float width = weights[i - 1][k * ( sphereCenters[i].Count ) + j];
+                    float width = weights[i - 1][k * (sphereCenters[i].Count) + j];
                     width += 1.0f;
                     width /= 2.0f;
                     width = Mathf.Lerp(0.003f, 0.03f, width);
@@ -225,7 +243,8 @@ public class NeuronInstantiator : MonoBehaviour {
         NNModel Model;
         string epochNumber = "epoch_" + currentEpoch.ToString() + ".onnx";
         Model = (NNModel)AssetDatabase.LoadAssetAtPath("Assets/Scripts/Backend/epochs/" + epochNumber, typeof(NNModel));
-        if (Model == null) { 
+        if (Model == null)
+        {
             Debug.Log("Could not find next model");
             return null;
         }
@@ -239,14 +258,14 @@ public class NeuronInstantiator : MonoBehaviour {
     // should be called to check for every update to the network
     public void InstantiateNetwork()
     {
-        prevModel = model;
-        model = getNextModel();
-        if (model == null)
-        {
-            // return because there are no changes to be made
-            return;
-        }
-        sphereCenters = new List<List<Vector3>>();
+        //prevModel = model;
+        //model = getNextModel();
+        //if (model == null)
+        ////{
+        //    // return because there are no changes to be made
+        //    return;
+        //}
+        model = ModelLoader.Load(Model);
         List<int> layersToBeDrawn = new List<int>();
         List<float[]> weights = Generate_Weights(model);
         // int cols = tensorThree.shape.channels;
@@ -256,9 +275,12 @@ public class NeuronInstantiator : MonoBehaviour {
 
         // fetching details on each layer
         bool first = true;
-        foreach (var layer in model.layers) {
-            if (layer.type == Unity.Barracuda.Layer.Type.Dense) {
-                if (first) {
+        foreach (var layer in model.layers)
+        {
+            if (layer.type == Unity.Barracuda.Layer.Type.Dense)
+            {
+                if (first)
+                {
                     layersToBeDrawn.Add(layer.datasets[0].shape.flatHeight);
                 }
                 first = false;
@@ -270,7 +292,7 @@ public class NeuronInstantiator : MonoBehaviour {
         Spawn_Neurons(ref layersToBeDrawn);
         //Create_Layer_Objects(ref layersToBeDrawn);
         Spawn_Weights(ref weights);
-        SendPulses(Generate_Weights(prevModel), Generate_Weights(model));
+        //SendPulses(Generate_Weights(prevModel), Generate_Weights(model));
     }
 
     // ideally, should compare two neural networks to see changes/differences, and then send pulses to the ones that have been changed
@@ -281,11 +303,15 @@ public class NeuronInstantiator : MonoBehaviour {
         List<int> correspondingLayer = new List<int>();
         List<bool[]> diff = NeuralNetWorkSpawner.GetComponent<NNDiff>().Generate_Diff(previousModel, currentModel);
         // go through diff, finding out which one is to be added
-        for (int i = 0; i < sphereCenters.Count - 1; i++) {
-            for (int j = 0; j < sphereCenters[i].Count; j++) {
-                for (int k = 0; k < sphereCenters[i + 1].Count; k++) {
+        for (int i = 0; i < sphereCenters.Count - 1; i++)
+        {
+            for (int j = 0; j < sphereCenters[i].Count; j++)
+            {
+                for (int k = 0; k < sphereCenters[i + 1].Count; k++)
+                {
                     int ind = j * sphereCenters[i + 1].Count + k;
-                    if (diff[i][ind] == true) {
+                    if (diff[i][ind] == true)
+                    {
                         List<Vector3> tempList = new List<Vector3>();
                         tempList.Add(sphereCenters[i + 1][k]);
                         tempList.Add(sphereCenters[i][j]);
@@ -315,8 +341,10 @@ public class NeuronInstantiator : MonoBehaviour {
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime >= 5.0f) {
+        if (elapsedTime >= 5.0f)
+        {
             elapsedTime = 0;
+            this.GetComponentInParent<PulseController>().Clean_Up();
             // check for updates
             //List<float[]> oldWeights = Generate_Weights(model);
             // get a diff between both models
