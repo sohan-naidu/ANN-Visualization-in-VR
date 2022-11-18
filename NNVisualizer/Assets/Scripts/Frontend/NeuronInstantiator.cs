@@ -225,7 +225,7 @@ public class NeuronInstantiator : MonoBehaviour {
         NNModel Model;
         string epochNumber = "epoch_" + currentEpoch.ToString() + ".onnx";
         Model = (NNModel)AssetDatabase.LoadAssetAtPath("Assets/Scripts/Backend/epochs/" + epochNumber, typeof(NNModel));
-        if (Model == null) { 
+        if (Model == null) {
             Debug.Log("Could not find next model");
             return null;
         }
@@ -241,8 +241,7 @@ public class NeuronInstantiator : MonoBehaviour {
     {
         prevModel = model;
         model = getNextModel();
-        if (model == null)
-        {
+        if (model == null) {
             // return because there are no changes to be made
             return;
         }
