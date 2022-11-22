@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class PulseController : MonoBehaviour
-{
+public class PulseController : MonoBehaviour {
     private List<List<Vector3>> positions;
     private List<int> correspondingLayer;
     private List<List<Vector3>> layerPositions;
@@ -29,13 +28,11 @@ public class PulseController : MonoBehaviour
 
     public void sendNNPulse(List<List<Vector3>> NeuronPositions, List<int> NNCorrespondingLayer, float moveSpeedVal)
     {
-        if (!initialized)
-        {
+        if (!initialized) {
             Initialize();
             initialized = true;
         }
-        for (int i = 0; i < NeuronPositions.Count; i++)
-        {
+        for (int i = 0; i < NeuronPositions.Count; i++) {
             positions.Add(NeuronPositions[i]);
             correspondingLayer.Add(NNCorrespondingLayer[i]);
         }
@@ -49,9 +46,12 @@ public class PulseController : MonoBehaviour
             Destroy(trailObjects[i]);
         trailObjects.Clear();
         Assert.IsTrue(trailObjects.Count == 0);
-        if (layerPositions != null) layerPositions.Clear();
-        if (positions != null) positions.Clear();
-        if (correspondingLayer != null) correspondingLayer.Clear();
+        if (layerPositions != null)
+            layerPositions.Clear();
+        if (positions != null)
+            positions.Clear();
+        if (correspondingLayer != null)
+            correspondingLayer.Clear();
         currentLayer = 0;
         numLayers = 0;
         spawnNetwork = false;
@@ -60,36 +60,34 @@ public class PulseController : MonoBehaviour
 
     public void Start_Network()
     {
+        this.GetComponentInParent<NeuronInstantiator>().currentEpoch = 0;
         spawnNetwork = true;
     }
 
     void Update()
     {
-        if (!spawnNetwork) return;
+        if (!spawnNetwork)
+            return;
 
-        if (!initialized)
-        {
+        if (!initialized) {
             Initialize();
             initialized = true;
         }
 
-        if (positions.Count == 0 && layerPositions.Count == 0)
-        {
+        if (positions.Count == 0 && layerPositions.Count == 0) {
             this.GetComponentInParent<NeuronInstantiator>().InstantiateNetwork();
         }
 
         int runs = 0;
         List<bool> tempMarked = new List<bool>(new bool[positions.Count]);
-        while (positions.Count > 0 && layerPositions.Count == 0)
-        {
+        while (positions.Count > 0 && layerPositions.Count == 0) {
             runs++;
             Assert.IsTrue(runs < 1000);
             currentLayer--;
-            if (currentLayer < 0) currentLayer += numLayers;
-            for (int i = 0; i < positions.Count; i++)
-            {
-                if (correspondingLayer[i] == currentLayer)
-                {
+            if (currentLayer < 0)
+                currentLayer += numLayers;
+            for (int i = 0; i < positions.Count; i++) {
+                if (correspondingLayer[i] == currentLayer) {
                     layerPositions.Add(positions[i]);
                     tempMarked[i] = true;
                 }
@@ -97,27 +95,22 @@ public class PulseController : MonoBehaviour
         }
 
         int tmp = 0;
-        while (tmp < positions.Count)
-        {
-            if (tempMarked[tmp])
-            {
+        while (tmp < positions.Count) {
+            if (tempMarked[tmp]) {
                 tempMarked.RemoveAt(tmp);
                 positions.RemoveAt(tmp);
             }
-            else
-            {
+            else {
                 tmp++;
             }
         }
 
         //if (numLayers <= 0) return;
 
-        if (sendPulse)
-        {
+        if (sendPulse) {
             int n = layerPositions.Count;
             int currentSize = trailObjects.Count;
-            while (currentSize < n)
-            {
+            while (currentSize < n) {
                 GameObject reference = Instantiate(NNPulsePrefab);
                 reference.transform.position = layerPositions[currentSize][0];
                 GameObject temp = new GameObject();
@@ -130,11 +123,9 @@ public class PulseController : MonoBehaviour
             }
 
             List<bool> marked = new List<bool>(new bool[n]);
-            for (int i = 0; i < n; i++)
-            {
+            for (int i = 0; i < n; i++) {
                 Vector3 EndPoint = layerPositions[i][1];
-                if (trailObjects[i].transform.position != EndPoint)
-                {
+                if (trailObjects[i].transform.position != EndPoint) {
                     Vector3 directionToMove = EndPoint - trailObjects[i].transform.position;
                     directionToMove = directionToMove.normalized;
                     float stepSize = moveSpeed * Time.deltaTime;
@@ -146,28 +137,24 @@ public class PulseController : MonoBehaviour
                     //float timeRatio = elapsedTime / 2.0f;
                     //float expectedDistance = totalDistance * timeRatio;
                     //float distanceThisFrame = expectedDistance - (trailObjects[i].transform.position - layerPositions[i][0]).magnitude;
-                    trailObjects[i].transform.position = trailObjects[i].transform.position + Vector3.ClampMagnitude((directionToMove * 20.0f), maxDistance);
+                    trailObjects[i].transform.position = trailObjects[i].transform.position + Vector3.ClampMagnitude(( directionToMove * 20.0f ), maxDistance);
                     //trailObjects[i].transform.position = trailObjects[i].transform.position + Vector3.ClampMagnitude(directionToMove, distanceThisFrame);
                     //trailObjects[i].transform.position = trailObjects[i].transform.position + (directionToMove * distanceThisFrame);
                 }
-                else
-                {
+                else {
                     marked[i] = true;
                 }
             }
 
             int cur = 0;
-            while (cur < trailObjects.Count)
-            {
-                if (marked[cur])
-                {
+            while (cur < trailObjects.Count) {
+                if (marked[cur]) {
                     Destroy(trailObjects[cur]);
                     marked.RemoveAt(cur);
                     trailObjects.RemoveAt(cur);
                     layerPositions.RemoveAt(cur); // make this happen one layer at a time
                 }
-                else
-                {
+                else {
                     ++cur;
                 }
             }

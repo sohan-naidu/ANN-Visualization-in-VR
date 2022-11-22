@@ -30,26 +30,52 @@ public class UIHandler : MonoBehaviour {
     GameObject layerBoxParent;
     private string fileName;
     private int currentEpoch;
+    bool updated;
 
     GameObject buttons;
     GameObject slider;
     GameObject layerBoxes;
     public GameObject neuronSelect;
     public ButtonType buttonType;
+    public GameObject NNSpawner;
     public int numberOfNeurons;
     public int layer;
     public int neuronPosition;
+    public GameObject loadingScreen;
+
+
+    System.Diagnostics.Process p;
 
     private void Start()
     {
         fileName = Application.dataPath + "/Scripts/Backend/scripts/backend.py";
         Debug.Log(fileName);
         instantiateUI();
+        updated = false;
         // callUpdate();
     }
+
+    /*private void Update()
+    {
+        if (p != null && p.HasExited && !updated) {
+            //remove loading screen
+            loadingScreen.SetActive(false);
+
+            //Load new network and pulse
+            NNSpawner.GetComponent<PulseController>().Start_Network();
+
+            //Change model to new model
+            //Incorporate in NeuronInstantiator
+            //GameObject.Find("NeuralNetworkSpawner").GetComponent<NeuronInstantiator>().InstantiateNetwork();
+            instantiateUI();
+
+            updated = true;
+        }
+    }*/
+
     public void instantiateUI()
     {
-        buttonType = UIHandler.ButtonType.None;
+        //buttonType = UIHandler.ButtonType.None;
         buttons = Instantiate(UIButtonsPrefab);
         buttons.name = "UIButtons";
         buttons.transform.SetParent(GameObject.Find("UI").transform);
@@ -127,7 +153,7 @@ public class UIHandler : MonoBehaviour {
 
     private void runPythonProcess(string cmd)
     {
-        System.Diagnostics.Process p = new System.Diagnostics.Process();
+        p = new System.Diagnostics.Process();
         p.StartInfo = new System.Diagnostics.ProcessStartInfo();
         //check if works
         //specific to my system
@@ -156,7 +182,12 @@ public class UIHandler : MonoBehaviour {
     //Do what they want here
     public void callUpdate()
     {
-        int currentEpoch = GameObject.Find("NeuralNetworkSpawner").GetComponent<NeuronInstantiator>().currentEpoch - 5;
+        //Remove network from screen
+        NNSpawner.GetComponent<PulseController>().Clean_Up();
+        // Activate loading screen
+        loadingScreen.SetActive(true);
+
+        int currentEpoch = 0;
         string args = "";
         //add epoch number later
         switch (buttonType) {
@@ -177,12 +208,7 @@ public class UIHandler : MonoBehaviour {
                 break;
         }
         runPythonProcess(args);
-
-        //Change model to new model
-        //Incorporate in NeuronInstantiator
-        //GameObject.Find("NeuralNetworkSpawner").GetComponent<NeuronInstantiator>().InstantiateNetwork();
-        instantiateUI();
-
+        updated = false;
     }
 }
 

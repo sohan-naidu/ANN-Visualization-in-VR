@@ -18,11 +18,12 @@ public class UserInput : MonoBehaviour {
         //args depending on what sohan needs
         string outputJson = JsonConvert.SerializeObject(new
         {
-            datasetPath = this.datasetFolderPath + "dataset.csv",
+            datasetPath = this.datasetFolderPath + "/dataset.csv",
             targets = this.targetVariables,
             layerCount = this.layerCount,
             neuronsCount = this.neuronsPerLayer
         });
+        Debug.Log(outputJson);
         File.WriteAllText(datasetFolderPath + "ip.json", outputJson);
         //Write this to a file
         //Ask for path required, args order and run
