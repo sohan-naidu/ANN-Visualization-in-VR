@@ -30,6 +30,8 @@ public class NeuronInstantiator : MonoBehaviour
     // keeps track of elapsed time
     public int currentEpoch;
     float elapsedTime;
+    bool testDone = false;
+    bool testDone2 = false;
 
     public class NNCube
     {
@@ -60,6 +62,7 @@ public class NeuronInstantiator : MonoBehaviour
     public List<float[]> Generate_Weights(Model currentNNModel)
     {
         List<float[]> weights = new List<float[]>();
+        if (currentNNModel == null) return weights;
         foreach (var layer in currentNNModel.layers)
         {
             if (layer.type == Unity.Barracuda.Layer.Type.Dense)
@@ -72,7 +75,7 @@ public class NeuronInstantiator : MonoBehaviour
     }
 
     // cleans up network before re-drawing
-    private void Clean_Up()
+    public void Clean_Up()
     {
         for (int i = 0; i < sphereReferences.Count; i++)
             for (int j = 0; j < sphereReferences[i].Count; j++)
@@ -258,14 +261,14 @@ public class NeuronInstantiator : MonoBehaviour
     // should be called to check for every update to the network
     public void InstantiateNetwork()
     {
-        //prevModel = model;
-        //model = getNextModel();
-        //if (model == null)
-        ////{
-        //    // return because there are no changes to be made
-        //    return;
-        //}
-        model = ModelLoader.Load(Model);
+        prevModel = model;
+        model = getNextModel();
+        if (model == null)
+        {
+            // return because there are no changes to be made
+            return;
+        }
+        //model = ModelLoader.Load(Model);
         List<int> layersToBeDrawn = new List<int>();
         List<float[]> weights = Generate_Weights(model);
         // int cols = tensorThree.shape.channels;
@@ -292,7 +295,7 @@ public class NeuronInstantiator : MonoBehaviour
         Spawn_Neurons(ref layersToBeDrawn);
         //Create_Layer_Objects(ref layersToBeDrawn);
         Spawn_Weights(ref weights);
-        //SendPulses(Generate_Weights(prevModel), Generate_Weights(model));
+        SendPulses(Generate_Weights(prevModel), Generate_Weights(model));
     }
 
     // ideally, should compare two neural networks to see changes/differences, and then send pulses to the ones that have been changed
@@ -332,7 +335,7 @@ public class NeuronInstantiator : MonoBehaviour
         LayerParentGameObject = new GameObject("Layer Parent");
         LayerParentGameObject.transform.position = new Vector3(0, 0, 0);
         LayerParentGameObject.transform.rotation = Quaternion.identity;
-        InstantiateNetwork();
+        //InstantiateNetwork();
         //Model testOldModel = ModelLoader.Load(testInputModel);
         //Model testUpdatedModel = ModelLoader.Load(testChangedModel);
         //SendPulses(Generate_Weights(testOldModel), Generate_Weights(testUpdatedModel));
@@ -341,10 +344,22 @@ public class NeuronInstantiator : MonoBehaviour
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime >= 5.0f)
+        if (elapsedTime >= 3.0f)
         {
-            elapsedTime = 0;
-            this.GetComponentInParent<PulseController>().Clean_Up();
+            //elapsedTime = 0;
+            //if (!testDone)
+            //{
+            //    this.GetComponentInParent<PulseController>().Clean_Up();
+            //    testDone = true;
+            //}
+            //if (elapsedTime >= 6.0f)
+            //{
+            //    if (!testDone2)
+            //    {
+            //        this.GetComponentInParent<PulseController>().Start_Network();
+            //        testDone2 = true;
+            //    }
+            //}
             // check for updates
             //List<float[]> oldWeights = Generate_Weights(model);
             // get a diff between both models
