@@ -229,6 +229,12 @@ public class NeuronInstantiator : MonoBehaviour {
 
     private Model getNextModel()
     {
+        if (currentEpoch == 20)
+        {
+            // check everything
+            int t = 0;
+            t++;
+        }
         NNModel Model;
         string epochNumber = "epoch_" + currentEpoch.ToString() + ".onnx";
         Model = (NNModel)AssetDatabase.LoadAssetAtPath("Assets/Scripts/Backend/epochs/" + epochNumber, typeof(NNModel));
@@ -325,7 +331,7 @@ public class NeuronInstantiator : MonoBehaviour {
             //elapsedTime = 0;
             if (!testDone) {
                 //   this.GetComponentInParent<PulseController>().Clean_Up();
-                GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
+                //GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
                 testDone = true;
             }
             //if (elapsedTime >= 6.0f)

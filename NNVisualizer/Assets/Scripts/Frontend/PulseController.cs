@@ -69,20 +69,22 @@ public class PulseController : MonoBehaviour {
         if (!spawnNetwork)
             return;
 
+        // do all initialization exactly once
         if (!initialized) {
             Initialize();
             initialized = true;
         }
 
+        // check if all pulses have been sent, in which case attempt to reload the network
         if (positions.Count == 0 && layerPositions.Count == 0) {
             this.GetComponentInParent<NeuronInstantiator>().InstantiateNetwork();
         }
 
+        // add pulses to layerPositions if all pulses for the current layer have been sent out
+        // and there are pulses yet to be sent in other layers
         int runs = 0;
         List<bool> tempMarked = new List<bool>(new bool[positions.Count]);
         while (positions.Count > 0 && layerPositions.Count == 0) {
-            runs++;
-            Assert.IsTrue(runs < 1000);
             currentLayer--;
             if (currentLayer < 0)
                 currentLayer += numLayers;
@@ -92,6 +94,8 @@ public class PulseController : MonoBehaviour {
                     tempMarked[i] = true;
                 }
             }
+            runs++;
+            Assert.IsTrue(runs < 1000);
         }
 
         int tmp = 0;
@@ -99,6 +103,7 @@ public class PulseController : MonoBehaviour {
             if (tempMarked[tmp]) {
                 tempMarked.RemoveAt(tmp);
                 positions.RemoveAt(tmp);
+                correspondingLayer.RemoveAt(tmp);
             }
             else {
                 tmp++;
