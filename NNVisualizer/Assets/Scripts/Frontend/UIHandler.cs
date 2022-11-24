@@ -164,7 +164,7 @@ public class UIHandler : MonoBehaviour {
         // Activate loading screen
         loadingScreen.SetActive(true);
 
-        int currentEpoch = 5;
+        int currentEpoch = 0;
         string args = "";
         //add epoch number later
         switch (buttonType) {
