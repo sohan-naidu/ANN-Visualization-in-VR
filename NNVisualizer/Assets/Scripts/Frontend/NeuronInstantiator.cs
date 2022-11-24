@@ -118,8 +118,8 @@ public class NeuronInstantiator : MonoBehaviour {
             //Set neuron Color
             //Check if pulse color also should be set
             Material neuronMaterial = reference.GetComponent<MeshRenderer>().material;
-            //float factor = Mathf.Pow(2, 1f + 1.0f / ( intensity[layer][i + numberOfNeuronsDrawn] / 2f ));
-            float factor = 5 * Mathf.Log(intensity[layer][i + numberOfNeuronsDrawn] + 1.5f) + 1f;
+            float factor = Mathf.Pow(2, intensity[layer][i + numberOfNeuronsDrawn]);
+            //float factor = 5 * Mathf.Log(intensity[layer][i + numberOfNeuronsDrawn] + 1.5f) + 1f;
             //float factor = Mathf.Pow(2, 1f);
             Color oldColor = neuronMaterial.GetColor("_EmissionColor");
             Color newColor = oldColor * factor;
@@ -189,7 +189,7 @@ public class NeuronInstantiator : MonoBehaviour {
             if (intensity.Count <= layer) {
                 intensity.Add(new List<float>());
             }
-            float sumOfIntensities = 0f;
+            float maxIntensity = 0f;
             for (int i = 0; i < layersToBeDrawn[layer]; i++) {
                 if (layer == 0)
                     intensity[layer].Add(1);
@@ -201,10 +201,11 @@ public class NeuronInstantiator : MonoBehaviour {
                         intensity[layer][i] += ( weights[layer - 1][j * layersToBeDrawn[layer] + i] * intensity[layer - 1][j] );
                     }
                 }
-                sumOfIntensities += intensity[layer][i];
+                intensity[layer][i] = Mathf.Abs(intensity[layer][i]);
+                maxIntensity = Mathf.Max(intensity[layer][i], maxIntensity);
             }
             for (int i = 0; i < layersToBeDrawn[layer]; i++) {
-                intensity[layer][i] /= sumOfIntensities;
+                intensity[layer][i] /= maxIntensity;
             }
 
             int rem = layersToBeDrawn[layer];
@@ -216,6 +217,8 @@ public class NeuronInstantiator : MonoBehaviour {
 
             currentPosition.x += cube.jumpLength.x;
         }
+
+        Debug.Log(intensity);
 
         // update the number of layers for the pulse controller
         NeuralNetWorkSpawner.GetComponent<PulseController>().numLayers = layersToBeDrawn.Count;
