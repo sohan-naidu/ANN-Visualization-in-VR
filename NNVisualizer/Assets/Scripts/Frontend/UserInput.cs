@@ -25,10 +25,8 @@ public class UserInput : MonoBehaviour {
         });
         Debug.Log(outputJson);
         File.WriteAllText(datasetFolderPath + "ip.json", outputJson);
-        //Write this to a file
-        //Ask for path required, args order and run
         string args = string.Format("{0} -i", pythonInitFilename);
-        runPythonProcess(args);
+        //runPythonProcess(args);
     }
 
     private void runPythonProcess(string cmd)

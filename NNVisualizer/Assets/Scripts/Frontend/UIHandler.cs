@@ -55,7 +55,7 @@ public class UIHandler : MonoBehaviour {
         // callUpdate();
     }
 
-    /*private void Update()
+    private void Update()
     {
         if (p != null && p.HasExited && !updated) {
             //remove loading screen
@@ -71,7 +71,7 @@ public class UIHandler : MonoBehaviour {
 
             updated = true;
         }
-    }*/
+    }
 
     public void instantiateUI()
     {
@@ -82,29 +82,6 @@ public class UIHandler : MonoBehaviour {
         // buttons.transform.position = GameObject.Find("UI").transform.position + buttons.transform.position;
         // buttons.transform.position = GameObject.Find("UI").transform.position;
     }
-
-    /*
-    private void destroyObject(GameObject obj)
-    {
-        foreach (Transform child in obj.transform) {
-            Destroy(child.gameObject);
-        }
-    }
-
-    
-    //Destroy All the buttons
-    public void destroyButtons(string button)
-    {
-        // Debug.Log("Destroy buttons called");
-        // Debug.Log(button);
-        if (button == "Add Neuron Button")
-            buttonType = ButtonType.AddNeuron;
-        else if (button == "Delete Neuron Button")
-            buttonType = ButtonType.DeleteNeuron;
-
-        destroyObject(buttons);
-    }
-    */
 
     public void spawnNeuronSelectText()
     {
@@ -158,7 +135,7 @@ public class UIHandler : MonoBehaviour {
         //check if works
         //specific to my system
         p.StartInfo.FileName = "C:/My_Files/Dev/Python39/python.exe";
-        p.StartInfo.RedirectStandardError = true;
+        //p.StartInfo.RedirectStandardError = true;
         p.StartInfo.Arguments = string.Format("{0} {1}", fileName, cmd);
         //p.StartInfo.RedirectStandardOutput = true;
         p.StartInfo.UseShellExecute = false;
@@ -173,13 +150,13 @@ public class UIHandler : MonoBehaviour {
         //string output = p.StandardOutput.ReadToEnd();
         //Debug.Log(output);
 
-        string stringErrorOutput = p.StandardError.ReadToEnd();
-        Debug.Log(stringErrorOutput);
+        //string stringErrorOutput = p.StandardError.ReadToEnd();
+        //Debug.Log(stringErrorOutput);
 
-        p.WaitForExit();
+        //Make it synchronous
+        //p.WaitForExit();
     }
-    //Manzood + Sohan integration
-    //Do what they want here
+
     public void callUpdate()
     {
         //Remove network from screen
@@ -187,7 +164,7 @@ public class UIHandler : MonoBehaviour {
         // Activate loading screen
         loadingScreen.SetActive(true);
 
-        int currentEpoch = 0;
+        int currentEpoch = 5;
         string args = "";
         //add epoch number later
         switch (buttonType) {

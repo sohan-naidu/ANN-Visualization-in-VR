@@ -25,6 +25,8 @@ public class NeuronInstantiator : MonoBehaviour {
     List<List<GameObject>> sphereReferences = new List<List<GameObject>>();
     List<List<List<GameObject>>> emptyGameObjects = new List<List<List<GameObject>>>();
     List<List<Vector3>> sphereCenters = new List<List<Vector3>>();
+    List<float[]> weights;
+    List<List<float>> intensity;
 
     // keeps track of elapsed time
     public int currentEpoch;
@@ -113,6 +115,15 @@ public class NeuronInstantiator : MonoBehaviour {
             interactionObj.neuronPosition = i + numberOfNeuronsDrawn;
             reference.transform.parent = NeuralNetWorkSpawner.transform;
 
+            //Set neuron Color
+            //Check if pulse color also should be set
+            Material neuronMaterial = reference.GetComponent<MeshRenderer>().material;
+            float factor = Mathf.Pow(2, intensity[layer][i + numberOfNeuronsDrawn]);
+            //float factor = Mathf.Pow(2, 1f);
+            Color oldColor = neuronMaterial.GetColor("_EmissionColor");
+            Color newColor = oldColor * factor;
+            neuronMaterial.SetColor("_EmissionColor", newColor);
+
             sphereReferences[layer].Add(reference);
             sphereCenters[layer].Add(currentPosition);
             emptyGameObjects[layer].Add(new List<GameObject>());
@@ -173,6 +184,23 @@ public class NeuronInstantiator : MonoBehaviour {
             if (columnsAlongZAxis % 2 == 0)
                 currentPosition.z += cube.jumpLength.z / 2;
 
+            //check weighted sum
+            if (intensity.Count <= layer) {
+                intensity.Add(new List<float>());
+            }
+            for (int i = 0; i < layersToBeDrawn[layer]; i++) {
+                if (layer == 0)
+                    intensity[layer].Add(1);
+                else {
+                    while (intensity[layer].Count <= i) {
+                        intensity[layer].Add(0);
+                    }
+                    for (int j = 0; j < layersToBeDrawn[layer - 1]; j++) {
+                        intensity[layer][i] += ( weights[layer - 1][j * weights[layer].Length + i] * intensity[layer - 1][j] );
+                    }
+                }
+            }
+
             int rem = layersToBeDrawn[layer];
             while (rem > 0) {
                 Spawn_Vertically(currentPosition.x, currentPosition.z, Mathf.Min(rem, batchSize), layer, cube, layersToBeDrawn[layer] - rem);
@@ -187,7 +215,7 @@ public class NeuronInstantiator : MonoBehaviour {
         NeuralNetWorkSpawner.GetComponent<PulseController>().numLayers = layersToBeDrawn.Count;
     }
 
-    private void Spawn_Weights(ref List<float[]> weights)
+    private void Spawn_Weights()
     {
         // LOGIC FOR REPRESENTING WEIGHTS
         for (int i = 1; i < sphereReferences.Count; i++) {
@@ -229,8 +257,7 @@ public class NeuronInstantiator : MonoBehaviour {
 
     private Model getNextModel()
     {
-        if (currentEpoch == 20)
-        {
+        if (currentEpoch == 20) {
             // check everything
             int t = 0;
             t++;
@@ -240,6 +267,7 @@ public class NeuronInstantiator : MonoBehaviour {
         Model = (NNModel)AssetDatabase.LoadAssetAtPath("Assets/Scripts/Backend/epochs/" + epochNumber, typeof(NNModel));
         if (Model == null) {
             Debug.Log("Could not find next model");
+            Debug.Log("Current Epoch Number " + currentEpoch);
             return null;
         }
         Model newModel;
@@ -260,7 +288,8 @@ public class NeuronInstantiator : MonoBehaviour {
         }
         //model = ModelLoader.Load(Model);
         List<int> layersToBeDrawn = new List<int>();
-        List<float[]> weights = Generate_Weights(model);
+        weights = Generate_Weights(model);
+        intensity = new List<List<float>>();
         // int cols = tensorThree.shape.channels;
         // int rows = tensorThree.shape.batch;
 
@@ -281,7 +310,7 @@ public class NeuronInstantiator : MonoBehaviour {
         Clean_Up();
         Spawn_Neurons(ref layersToBeDrawn);
         //Create_Layer_Objects(ref layersToBeDrawn);
-        Spawn_Weights(ref weights);
+        Spawn_Weights();
         SendPulses(Generate_Weights(prevModel), Generate_Weights(model));
     }
 
@@ -327,11 +356,10 @@ public class NeuronInstantiator : MonoBehaviour {
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime >= 5.0f) {
+        if (elapsedTime >= 15.0f) {
             //elapsedTime = 0;
             if (!testDone) {
-                //   this.GetComponentInParent<PulseController>().Clean_Up();
-                //GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
+                GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
                 testDone = true;
             }
             //if (elapsedTime >= 6.0f)
