@@ -184,7 +184,7 @@ public class UIHandler : MonoBehaviour {
         // Activate loading screen
         loadingScreen.SetActive(true);
 
-        int currentEpoch = 0;
+        int currentEpoch = 5;
         string args = "";
         //add epoch number later
         switch (buttonType) {
@@ -192,13 +192,13 @@ public class UIHandler : MonoBehaviour {
                 args = string.Format("add {0} {1} {2}", layer - 1, numberOfNeurons, currentEpoch);
                 break;
             case ButtonType.AddLayer:
-                args = string.Format("addL {0} {1} {2}", layer - 1, numberOfNeurons, currentEpoch);
+                args = string.Format("addL {0} {1} {2}", layer, numberOfNeurons, currentEpoch);
                 break;
             case ButtonType.DeleteNeuron:
                 args = string.Format("del {0} {1} {2}", layer - 1, neuronPosition, currentEpoch);
                 break;
             case ButtonType.DeleteLayer:
-                args = string.Format("delL {0} {1}", layer - 1, currentEpoch);
+                args = string.Format("delL {0} {1}", layer, currentEpoch);
                 break;
             default:
                 Debug.LogError("Illegal button type");

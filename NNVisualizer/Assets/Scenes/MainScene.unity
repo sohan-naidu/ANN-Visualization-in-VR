@@ -5903,9 +5903,9 @@ MonoBehaviour:
   neuronSelectPrefab: {fileID: 1624331496570366848, guid: d8814b2c7ae17284491fa44ffcfd7ac0,
     type: 3}
   neuronSelect: {fileID: 0}
-  buttonType: 0
+  buttonType: 2
   NNSpawner: {fileID: 72249389}
-  numberOfNeurons: 3
+  numberOfNeurons: 6
   layer: 2
   neuronPosition: 0
   loadingScreen: {fileID: 2025911652}
@@ -8726,8 +8726,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datasetFolderPath: C:\My_Files\Uni\Capstone\Implementation\NNVisualizer\Assets\Scripts\Backend\input
   targetVariables:
-  - price
-  neuronsPerLayer: 050000000700000001000000
+  - t
+  neuronsPerLayer: 010000000100000001000000
 --- !u!1 &1003432516
 GameObject:
   m_ObjectHideFlags: 0
@@ -13254,7 +13254,7 @@ PrefabInstance:
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.95487344
+      value: 0.9548735
       objectReference: {fileID: 0}
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
@@ -15436,7 +15436,7 @@ PrefabInstance:
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.95487344
+      value: 0.9548735
       objectReference: {fileID: 0}
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}

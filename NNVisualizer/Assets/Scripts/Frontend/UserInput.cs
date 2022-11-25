@@ -24,9 +24,9 @@ public class UserInput : MonoBehaviour {
             neuronsCount = this.neuronsPerLayer
         });
         Debug.Log(outputJson);
-        File.WriteAllText(datasetFolderPath + "ip.json", outputJson);
+        File.WriteAllText(datasetFolderPath + "/ip.json", outputJson);
         string args = string.Format("{0} -i", pythonInitFilename);
-        //runPythonProcess(args);
+        runPythonProcess(args);
     }
 
     private void runPythonProcess(string cmd)
