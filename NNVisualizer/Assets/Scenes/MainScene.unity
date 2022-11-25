@@ -2988,7 +2988,7 @@ MonoBehaviour:
   _contactEnabled: 1
   _graspingEnabled: 1
   _leapProvider: {fileID: 1755709240}
-  _handDataMode: 0
+  _handDataMode: 1
   enabledPrimaryHoverFingertips: 0101010000
   headTransform: {fileID: 0}
   projectionScale: 10
@@ -13254,7 +13254,7 @@ PrefabInstance:
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9548735
+      value: 0.95487344
       objectReference: {fileID: 0}
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
@@ -15436,7 +15436,7 @@ PrefabInstance:
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9548735
+      value: 0.95487344
       objectReference: {fileID: 0}
     - target: {fileID: 2555608097127290070, guid: 4577231256ebec149ac8882d93c98cda,
         type: 3}
@@ -23772,6 +23772,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 710483150779265749, guid: abe946cd97901d64ea614795f8f19cc7,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1114292136}
     - target: {fileID: 710483150779265750, guid: abe946cd97901d64ea614795f8f19cc7,
         type: 3}
       propertyPath: m_Pivot.x

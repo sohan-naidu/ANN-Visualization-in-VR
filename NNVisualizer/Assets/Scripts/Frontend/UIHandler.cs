@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 using Leap.Unity.Interaction;
 
 public class UIHandler : MonoBehaviour {
@@ -58,6 +59,8 @@ public class UIHandler : MonoBehaviour {
     private void Update()
     {
         if (p != null && p.HasExited && !updated) {
+            //Import the newly created models into unity
+            AssetDatabase.Refresh();
             //remove loading screen
             loadingScreen.SetActive(false);
 
@@ -79,15 +82,24 @@ public class UIHandler : MonoBehaviour {
         buttons = Instantiate(UIButtonsPrefab);
         buttons.name = "UIButtons";
         buttons.transform.SetParent(GameObject.Find("UI").transform);
-        // buttons.transform.position = GameObject.Find("UI").transform.position + buttons.transform.position;
-        // buttons.transform.position = GameObject.Find("UI").transform.position;
+
+        //Set transforms correctly
+        Vector3 x, y, z;
+        Transform cam = GameObject.Find("Camera").transform;
+        y = cam.up * -0.2f;
+        x = cam.right * 0.0f;
+        z = cam.forward * 0.5f;
+        buttons.transform.position = cam.position + x + y + z;
+        //buttons.transform.position = GameObject.Find("XRRig").transform.position + GameObject.Find("UI").transform.position + buttons.transform.position;
+        //buttons.transform.position = new Vector3(0, buttons.transform.position.y, 0.5f);
+        buttons.transform.rotation = cam.rotation;
     }
 
     public void spawnNeuronSelectText()
     {
-        neuronSelect = Instantiate(neuronSelectPrefab);
-        neuronSelect.name = "Neurons select Text Box";
-        neuronSelect.transform.SetParent(GameObject.Find("Camera").transform);
+        //neuronSelect = Instantiate(neuronSelectPrefab);
+        //neuronSelect.name = "Neurons select Text Box";
+        //neuronSelect.transform.SetParent(GameObject.Find("Camera").transform);
     }
 
     public void findNeuronPosition()
@@ -101,7 +113,15 @@ public class UIHandler : MonoBehaviour {
         slider = Instantiate(sliderPrefab, this.transform);
         slider.name = "Cube UI Slider Panel";
         slider.transform.SetParent(GameObject.Find("UI").transform);
-        // slider.transform.position = GameObject.Find("UI").transform.position + slider.transform.position;
+        Vector3 x, y, z;
+        Transform cam = GameObject.Find("Camera").transform;
+        y = cam.up * 0.0f;
+        x = cam.right * -0.2f;
+        z = cam.forward * 0.5f;
+        slider.GetComponent<RectTransform>().position = cam.position + x + y + z;
+        //buttons.transform.position = GameObject.Find("XRRig").transform.position + GameObject.Find("UI").transform.position + buttons.transform.position;
+        //buttons.transform.position = new Vector3(0, buttons.transform.position.y, 0.5f);
+        //slider.transform.rotation = cam.rotation;
     }
 
     public void spawnLayerBoxes()
@@ -178,7 +198,7 @@ public class UIHandler : MonoBehaviour {
                 args = string.Format("del {0} {1} {2}", layer - 1, neuronPosition, currentEpoch);
                 break;
             case ButtonType.DeleteLayer:
-                args = string.Format("delL {0} {2}", layer - 1, currentEpoch);
+                args = string.Format("delL {0} {1}", layer - 1, currentEpoch);
                 break;
             default:
                 Debug.LogError("Illegal button type");

@@ -40,7 +40,7 @@ public class Movement : MonoBehaviour {
                 float scale = 0.3f;
                 float moveMagnitude = Mathf.Abs(moveDirection.magnitude);
 
-                Debug.Log("Left Vector: " + leftVector + "\nRight Vector: " + rightVector + "\nMove direction: " + moveDirection.ToString() + "\nHead position" + headParent.transform.position.ToString());
+                //Debug.Log("Left Vector: " + leftVector + "\nRight Vector: " + rightVector + "\nMove direction: " + moveDirection.ToString() + "\nHead position" + headParent.transform.position.ToString());
                 // Debug.Log("Move direction: " + moveDirection.ToString() + "\nHead position" + head.transform.position.ToString());
 
                 //guard for hands being very close

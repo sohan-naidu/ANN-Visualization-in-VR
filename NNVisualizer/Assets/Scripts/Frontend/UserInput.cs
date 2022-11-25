@@ -52,5 +52,6 @@ public class UserInput : MonoBehaviour {
         Debug.Log(stringErrorOutput);
 
         p.WaitForExit();
+        UnityEditor.AssetDatabase.Refresh();
     }
 }
