@@ -371,14 +371,12 @@ public class NeuronInstantiator : MonoBehaviour {
                 GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
                 testDone = true;
             }
-            //if (elapsedTime >= 6.0f)
-            //{
-            //    if (!testDone2)
-            //    {
-            //        this.GetComponentInParent<PulseController>().Start_Network();
-            //        testDone2 = true;
-            //    }
-            //}
+            if (elapsedTime >= 25.0f) {
+                if (!testDone2) {
+                    GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
+                    testDone2 = true;
+                }
+            }
             // check for updates
             //List<float[]> oldWeights = Generate_Weights(model);
             // get a diff between both models
