@@ -1,6 +1,6 @@
 {
     "datasetPath" : "D:\\Unity\\UnityProjects\\Review 1\\Assets\\Scripts\\Capstone\\NNVisualizer\\Assets\\Scripts\\Backend\\input\\dataset.csv",
     "targets" : ["price"],
-    "layerCount" : 3,
-    "neuronsCount" : [5, 7, 1] 
+    "layerCount" : 2,
+    "neuronsCount" : [5, 7] 
 }

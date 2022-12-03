@@ -1,18 +1,19 @@
 import h5py
 import numpy as np
 import json
-import convertToONNX as cto
 import os
+from globals import OUTPUT_DIR, H5
 
-class neurons():
-    def __init__(self, op, x, y, curname):
+class Neurons:
+    def __init__(self, op, x, y, currentName):
         self.x = x
         self.y = y
         self.op = op
-        self.curname = curname
+        self.currentName = currentName
 
     def modify(self):
-        hf = h5py.File(os.path.dirname(os.path.abspath(__file__)) + '/../output/' + self.curname + ".h5", 'r+')
+        os.chdir(OUTPUT_DIR)
+        hf = h5py.File(self.currentName + H5, 'r+')
         arch = json.loads(hf.attrs.get("model_config"))
 
         all = []

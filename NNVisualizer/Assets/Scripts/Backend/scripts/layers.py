@@ -3,15 +3,16 @@ import json
 import numpy as np
 import copy
 import os
+from globals import OUTPUT_DIR, H5
 
-class layers():
+class Layers():
     def __init__(self, op, x, y, curname):
         self.op = op
         self.x = x
         self.y = y
         self.curname = curname
     
-    def getGroups(self, groups, jump):
+    def get_groups(self, groups, jump):
         current = []
         arr = []
         for i in range(0, len(groups), jump):
@@ -21,13 +22,15 @@ class layers():
             arr = []
         return current
     
-    def updateName(self, oldName):
+    def update_name(self, oldName):
         name, number = "", ""
         for j in range(len(oldName)):
+           
             if(oldName[j].isdigit()):
                 number += oldName[j]
             else:
                 name += oldName[j]
+        #print(oldName)
         num = int(number)
         if(self.op == "addL"):
             num += 1
@@ -38,7 +41,8 @@ class layers():
         return newName
         
     def modify(self):
-        hf = h5py.File(os.path.dirname(os.path.abspath(__file__)) + '/../output/' + self.curname + '.h5', 'r+')
+        os.chdir(OUTPUT_DIR)
+        hf = h5py.File(self.curname + H5, 'r+')
         arch = json.loads(hf.attrs.get("model_config"))
         all = []
         hf.visit(all.append)
@@ -46,12 +50,12 @@ class layers():
         groups = [all[i] for i in range(len(all)) if "model" in all[i]]
         groups = groups[1 : -1]          # Ignores model_weights and top_level_model_weights
 
-        layerGroups = self.getGroups(groups, 4)
+        layerGroups = self.get_groups(groups, 4)
 
         groups = [all[i] for i in range(len(all)) if "optimizer" in all[i]]
         groups = groups[2 : -1]  # Ignores optimizer_weights, optimizer_weights/optimizer and iter:0
 
-        optimizerGroups = self.getGroups(groups, 7)
+        optimizerGroups = self.get_groups(groups, 7)
 
         #  Architecture part 
         allLayers = arch['config']['layers']
@@ -71,17 +75,21 @@ class layers():
                     newDict['config']['activation'] = 'relu'
                     groupData.append(prev)
                     optimizerData.append(prev)
-
+                #print(layers[i]['config']['name'])
                 old = layers[i]['config']['name']
-                new = self.updateName(old)
+                #try:
+                new = self.update_name(old)
+                #except ValueError as e:
+                    #old = old + "_0"
+                    #hf.copy(layers[i]['config']['name'], old)
                 layers[i]['config']['name'] = new
 
                 for j in range(len(layerGroups[i])):                 # -1 cause last element in groups is in int (prev layer shape)
                     layerGroups[i][j] = layerGroups[i][j].replace(old, new)
                 for j in range(len(optimizerGroups[i])):
                     optimizerGroups[i][j] = optimizerGroups[i][j].replace(old, new)
-            self.modifygroups(hf, layerGroups, groupData)
-            self.modifyopt(hf, optimizerGroups, optimizerData)
+            self.modify_groups(hf, layerGroups, groupData)
+            self.modify_optimizer(hf, optimizerGroups, optimizerData)
 
             layers.insert(self.x, newDict)
             allLayers[1 : ] = layers
@@ -100,7 +108,7 @@ class layers():
                     continue
 
                 old = layers[i]['config']['name']
-                new = self.updateName(layers[i]['config']['name'])
+                new = self.update_name(layers[i]['config']['name'])
                 layers[i]['config']['name'] = new
 
                 
@@ -114,8 +122,8 @@ class layers():
             del layerGroups[self.x]
             del optimizerGroups[self.x]
 
-            self.modifygroups(hf, layerGroups, groupData)
-            self.modifyopt(hf, optimizerGroups, optimizerData)
+            self.modify_groups(hf, layerGroups, groupData)
+            self.modify_optimizer(hf, optimizerGroups, optimizerData)
 
             del layers[self.x]
             allLayers[1 : ] = layers
@@ -125,7 +133,7 @@ class layers():
             hf.close()
 
         
-    def modifygroups(self, hf, layerGroups, groupData):
+    def modify_groups(self, hf, layerGroups, groupData):
 
         
         model_weights = list(hf.keys())[0] # model_weights
@@ -134,7 +142,6 @@ class layers():
         saved = []
 
         if(self.op == "addL"):
-
             for i in range(self.x, len(layers)): # Deletion of old layers and saving weights
                 arr = []
                 subGroup = list(hf[model_weights][layers[i]].keys())[0]
@@ -207,11 +214,11 @@ class layers():
 
             layer_names = list(hf[model_weights].attrs.__getitem__('layer_names'))
             #for i in range(self.x + 1, len(layer_names)):
-                #layer_names[i] = self.updateName(layer_names[i])
+                #layer_names[i] = self.update_name(layer_names[i])
             del layer_names[len(layer_names) - 1]
             hf[model_weights].attrs.__setitem__('layer_names', layer_names)
 
-    def modifyopt(self, hf, optimizerGroups, optimizerData):
+    def modify_optimizer(self, hf, optimizerGroups, optimizerData):
 
         optimizerWeights = list(hf.keys())[1] # optimizer_weights
         optimizer = list(hf[optimizerWeights].keys())[0]  # Optimizier (Adam)
@@ -312,18 +319,5 @@ class layers():
             for i in range(len(arr)):
                 if(name in arr[i]):
                     del arr[i]
-                    #print(arr[i])
 
-
-
-
-            '''for i in range((self.x + 1)*2 + 1, len(arr), 10):
-                arr[i] = arr[i].replace(arr[i][len(optimizer) + 1 : -11], self.updateName(arr[i][len(optimizer) + 1 : -11]))
-                arr[i + 1] = arr[i + 1].replace(arr[i + 1][len(optimizer) + 1 : -9], self.updateName(arr[i + 1][len(optimizer) + 1 : -9]))
-                arr[i + 8] = arr[i + 8].replace(arr[i + 8][len(optimizer) + 1 : -11], self.updateName(arr[i + 8][len(optimizer) + 1 : -11]))
-                arr[i + 9] = arr[i + 9].replace(arr[i + 9][len(optimizer) + 1 : -9], self.updateName(arr[i + 9][len(optimizer) + 1 : -9]))
-            del arr[2*self.x + 1]
-            del arr[2*self.x + 1]
-            del arr[int(len(arr)/2) + 2*self.x]
-            del arr[int(len(arr)/2) + 2*self.x]'''
             hf[optimizerWeights].attrs.__setitem__("weight_names", arr)

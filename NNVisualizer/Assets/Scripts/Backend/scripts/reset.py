@@ -1,14 +1,12 @@
-import shutil
-from convertToONNX import convertToONNX as cto
 import os
 import glob
+from globals import EPOCHS_DIR, OUTPUT_DIR
 
-class reset:
+class Reset:
     def reset(self):
-        files = glob.glob("../epochs/*")
+        files = glob.glob(EPOCHS_DIR + "*")
         for file in files:
             os.remove(file)
-            #print(file)
-        files = glob.glob("../output/*")
+        files = glob.glob(OUTPUT_DIR + "*")
         for file in files:
             os.remove(file)

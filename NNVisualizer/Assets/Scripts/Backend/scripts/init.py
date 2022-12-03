@@ -1,23 +1,16 @@
 import os
 import json
 import pandas as pd
-import argparse
 from keras import Sequential
 from keras.layers import Dense
-from convertToONNX import convertToONNX as cto
+from convertToONNX import ConvertToONNX as cto
+from globals import *
+from keras import models
 
-class initialize:
-    def __init__(self):
-        self.JSON = "ip.json"
-
+class Initialize:
     def initialize(self):
-        os.chdir('../input/')
-        #df = pd.read_csv(self.dataset)
-        data = json.loads(open(self.JSON, "r").read())
-        #columnCount = len(df.columns)
-        #targetCount = len(data['targets'])
-        #inputDim = columnCount - targetCount
-        
+        os.chdir(INPUT_DIR)
+        data = json.loads(open(JSON, "r").read())
         datasetPath = data["datasetPath"]
         targets = data["targets"]
         layerCount = data['layerCount']
@@ -30,23 +23,22 @@ class initialize:
         inputDim = columnCount - targetCount
         if(layerCount == 1):
             raise ValueError("Can't have a single layer.")
+            
         model = Sequential()
         for layer in range(layerCount):
             if(layer == 0):
-                model.add(Dense(units = neuronsCount[layer], input_dim = inputDim, kernel_initializer='ones', activation='relu'))
+                model.add(Dense(units = neuronsCount[layer], input_dim = inputDim, kernel_initializer='random_normal', activation='relu'))
             else:
-                model.add(Dense(units = neuronsCount[layer], kernel_initializer='ones', activation='relu'))
+                model.add(Dense(units = neuronsCount[layer], kernel_initializer = 'random_normal', activation = 'tanh'))
+        model.add(Dense(units = 1, kernel_initializer = 'random_normal', activation = 'tanh'))
         model.compile(loss='mean_squared_error', optimizer='adam')
-        model.save(os.path.dirname(os.path.abspath(__file__)) + '/../output/epoch_0.h5', include_optimizer = True)
-        cto("epoch_0", os.path.dirname(os.path.abspath(__file__)) + '/../output/').convert()
-        #print(os.path.dirname(os.path.abspath(__file__)))
-        #return model
-
-'''if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description = "Backend initialization argument parser.")
-    #parser.add_argument('dataset', type = str, help = 'Dataset filename (csv)')
-    parser.add_argument('json', type = str, help = 'JSON filename')
-    args = parser.parse_args()
-    start = initialize(args.json)
-    model = start.initialize()
-    #model.save(os.path.dirname(os.path.abspath(__file__)) + '/../output/model.h5')'''
+        #history = self.model.fit(self.x_train, self.y_train, epochs = 5, verbose = 2, shuffle = True)
+        os.chdir(OUTPUT_DIR)
+        model.save("initial" + H5, include_optimizer = True)
+        #model.save("epoch_0" + H5)
+        #models.save_model(model, "epoch_0" + H5, include_optimizer=True)
+        #cto("initial").convert()
+        os.chdir(EPOCHS_DIR)
+        with open('metrics.json', 'w') as f:
+            #json.dump({"metrics" : []}, f, indent = 4)
+            json.dump({"metrics" : []}, f, indent = 4)
