@@ -31,7 +31,10 @@ class Train():
         if(flag):
             prevname = "initial"
         self.model = models.load_model(OUTPUT_DIR + prevname + H5) 
-        self.model.compile(loss = 'mean_squared_error', optimizer = 'adam', metrics = ['RootMeanSquaredError'])
+
+        # Change based on regression or classification
+        self.model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['RootMeanSquaredError'])
+        # self.model.compile(loss = 'mean_squared_error', optimizer = 'adam', metrics = ['RootMeanSquaredError'])
         
         if(flag):
             history = self.model.fit(self.x_train, self.y_train, epochs = 1, verbose = 2, shuffle = True)

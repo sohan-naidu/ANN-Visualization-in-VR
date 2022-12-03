@@ -27,11 +27,15 @@ class Initialize:
         model = Sequential()
         for layer in range(layerCount):
             if(layer == 0):
-                model.add(Dense(units = neuronsCount[layer], input_dim = inputDim, kernel_initializer='random_normal', activation='relu'))
+                model.add(Dense(units = neuronsCount[layer], input_dim = inputDim, kernel_initializer='random_normal', activation='tanh'))
             else:
                 model.add(Dense(units = neuronsCount[layer], kernel_initializer = 'random_normal', activation = 'tanh'))
         model.add(Dense(units = 1, kernel_initializer = 'random_normal', activation = 'tanh'))
-        model.compile(loss='mean_squared_error', optimizer='adam')
+
+        # Change based on regression/classification
+        model.compile(loss='binary_crossentropy', optimizer='adam')
+        # model.compile(loss='mean_squared_error', optimizer='adam')
+
         #history = self.model.fit(self.x_train, self.y_train, epochs = 5, verbose = 2, shuffle = True)
         os.chdir(OUTPUT_DIR)
         model.save("initial" + H5, include_optimizer = True)
