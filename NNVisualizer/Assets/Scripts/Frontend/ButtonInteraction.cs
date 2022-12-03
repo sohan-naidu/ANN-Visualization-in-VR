@@ -24,7 +24,7 @@ public class ButtonInteraction : InteractionButton {
             handler.buttonType = UIHandler.ButtonType.DeleteNeuron;
             //Pick Neuron
             // Spawn textbox for Neural select
-            handler.spawnNeuronSelectText();
+            //handler.spawnNeuronSelectText();
         }
         else if (name == "Delete Layer Button") {
             handler.buttonType = UIHandler.ButtonType.DeleteLayer;

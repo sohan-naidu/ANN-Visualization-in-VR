@@ -53,5 +53,6 @@ public class UserInput : MonoBehaviour {
 
         p.WaitForExit();
         UnityEditor.AssetDatabase.Refresh();
+        GameObject.Find("Metrics Text").GetComponent<UpdateMetrics>().Init();
     }
 }

@@ -11,7 +11,8 @@ class Train():
         self.x_train, self.y_train = self.get()
 
     def get(self):
-        os.chdir(INPUT_DIR)
+        os.chdir( os.path.dirname(os.path.abspath(__file__)) + INPUT_DIR)
+        #os.chdir(INPUT_DIR)
         data = json.loads(open(JSON, "r").read())
         datasetPath = data["datasetPath"]
         df = pd.read_csv(datasetPath)
@@ -46,9 +47,9 @@ class Train():
             old_data = json.load(f)
         history.history["loss"] = round(history.history["loss"][0], 6)
         history.history["root_mean_squared_error"] = round(history.history["root_mean_squared_error"][0], 6)
-        old = old_data["metrics"]
+        old = old_data
         old.append(history.history)
-        old_data["metrics"] = old
-        print((old_data["metrics"]))
+        old_data = old
+        print(old_data)
         with open("metrics.json", "w") as f:
             json.dump(old_data, f, indent = 4)

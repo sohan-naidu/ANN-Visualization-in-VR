@@ -1,0 +1,42 @@
+[
+    {
+        "loss": 0.975996,
+        "root_mean_squared_error": 0.987925
+    },
+    {
+        "loss": 0.913972,
+        "root_mean_squared_error": 0.956019
+    },
+    {
+        "loss": 0.346319,
+        "root_mean_squared_error": 0.588489
+    },
+    {
+        "loss": 0.33292,
+        "root_mean_squared_error": 0.576992
+    },
+    {
+        "loss": 0.328204,
+        "root_mean_squared_error": 0.572891
+    },
+    {
+        "loss": 0.325735,
+        "root_mean_squared_error": 0.570732
+    },
+    {
+        "loss": 0.323016,
+        "root_mean_squared_error": 0.568345
+    },
+    {
+        "loss": 0.320584,
+        "root_mean_squared_error": 0.566201
+    },
+    {
+        "loss": 0.318183,
+        "root_mean_squared_error": 0.564077
+    },
+    {
+        "loss": 0.31697,
+        "root_mean_squared_error": 0.563001
+    }
+]

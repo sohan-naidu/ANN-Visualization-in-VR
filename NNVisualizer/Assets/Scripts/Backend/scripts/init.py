@@ -9,7 +9,7 @@ from keras import models
 
 class Initialize:
     def initialize(self):
-        os.chdir(INPUT_DIR)
+        os.chdir( os.path.dirname(os.path.abspath(__file__)) + INPUT_DIR)
         data = json.loads(open(JSON, "r").read())
         datasetPath = data["datasetPath"]
         targets = data["targets"]
@@ -41,4 +41,4 @@ class Initialize:
         os.chdir(EPOCHS_DIR)
         with open('metrics.json', 'w') as f:
             #json.dump({"metrics" : []}, f, indent = 4)
-            json.dump({"metrics" : []}, f, indent = 4)
+            json.dump([], f, indent = 4)
