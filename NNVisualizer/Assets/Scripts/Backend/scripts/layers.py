@@ -40,7 +40,8 @@ class Layers():
         newName = name + number
         return newName
         
-    def modify(self):
+    def modify(self): 
+        os.chdir( os.path.dirname(os.path.abspath(__file__)))
         os.chdir(OUTPUT_DIR)
         hf = h5py.File(self.curname + H5, 'r+')
         arch = json.loads(hf.attrs.get("model_config"))

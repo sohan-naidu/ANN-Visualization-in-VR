@@ -155,7 +155,6 @@ public class UIHandler : MonoBehaviour {
         //check if works
         //specific to my system
         p.StartInfo.FileName = "C:/My_Files/Dev/Python39/python.exe";
-        //p.StartInfo.RedirectStandardError = true;
         p.StartInfo.Arguments = string.Format("{0} {1}", fileName, cmd);
         //p.StartInfo.RedirectStandardOutput = true;
         p.StartInfo.UseShellExecute = false;
@@ -163,18 +162,14 @@ public class UIHandler : MonoBehaviour {
 
         Debug.Log("Sohan's part called\nCmd: " + p.StartInfo.FileName + " " + fileName + " " + cmd);
 
-        //Debug.Log(p.StartInfo.Arguments);
+        p.StartInfo.RedirectStandardError = true;
         p.Start();
 
-
-        //string output = p.StandardOutput.ReadToEnd();
-        //Debug.Log(output);
-
-        //string stringErrorOutput = p.StandardError.ReadToEnd();
-        //Debug.Log(stringErrorOutput);
+        string stringErrorOutput = p.StandardError.ReadToEnd();
+        Debug.Log(stringErrorOutput);
 
         //Make it synchronous
-        //p.WaitForExit();
+        p.WaitForExit();
     }
 
     public void callUpdate()

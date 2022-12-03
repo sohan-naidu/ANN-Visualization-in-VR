@@ -1,42 +1,90 @@
 [
     {
-        "loss": 0.947452,
-        "root_mean_squared_error": 0.973371
+        "loss": 0.960987,
+        "root_mean_squared_error": 0.980299
     },
     {
-        "loss": 0.671697,
-        "root_mean_squared_error": 0.819571
+        "loss": 0.771461,
+        "root_mean_squared_error": 0.878329
     },
     {
-        "loss": 0.354531,
-        "root_mean_squared_error": 0.595425
+        "loss": 0.355128,
+        "root_mean_squared_error": 0.595926
     },
     {
-        "loss": 0.347865,
-        "root_mean_squared_error": 0.589801
+        "loss": 0.348771,
+        "root_mean_squared_error": 0.590569
     },
     {
-        "loss": 0.346193,
-        "root_mean_squared_error": 0.588381
+        "loss": 0.346652,
+        "root_mean_squared_error": 0.588772
     },
     {
-        "loss": 0.345851,
-        "root_mean_squared_error": 0.588091
+        "loss": 0.345642,
+        "root_mean_squared_error": 0.587913
     },
     {
-        "loss": 0.345118,
-        "root_mean_squared_error": 0.587467
+        "loss": 0.345061,
+        "root_mean_squared_error": 0.587419
     },
     {
-        "loss": 0.345627,
-        "root_mean_squared_error": 0.5879
+        "loss": 0.344291,
+        "root_mean_squared_error": 0.586763
     },
     {
-        "loss": 0.344636,
-        "root_mean_squared_error": 0.587057
+        "loss": 0.344142,
+        "root_mean_squared_error": 0.586636
     },
     {
-        "loss": 0.344267,
-        "root_mean_squared_error": 0.586743
+        "loss": 0.343791,
+        "root_mean_squared_error": 0.586337
+    },
+    {
+        "loss": 0.343872,
+        "root_mean_squared_error": 0.586406
+    },
+    {
+        "loss": 0.957084,
+        "root_mean_squared_error": 0.978307
+    },
+    {
+        "loss": 0.754952,
+        "root_mean_squared_error": 0.86888
+    },
+    {
+        "loss": 0.355642,
+        "root_mean_squared_error": 0.596357
+    },
+    {
+        "loss": 0.34833,
+        "root_mean_squared_error": 0.590195
+    },
+    {
+        "loss": 0.347168,
+        "root_mean_squared_error": 0.58921
+    },
+    {
+        "loss": 0.346084,
+        "root_mean_squared_error": 0.588289
+    },
+    {
+        "loss": 0.345092,
+        "root_mean_squared_error": 0.587445
+    },
+    {
+        "loss": 0.345143,
+        "root_mean_squared_error": 0.587489
+    },
+    {
+        "loss": 0.344248,
+        "root_mean_squared_error": 0.586726
+    },
+    {
+        "loss": 0.344438,
+        "root_mean_squared_error": 0.586888
+    },
+    {
+        "loss": 0.344869,
+        "root_mean_squared_error": 0.587255
     }
 ]
