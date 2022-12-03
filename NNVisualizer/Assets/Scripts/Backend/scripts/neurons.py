@@ -12,11 +12,12 @@ class Neurons:
         self.currentName = currentName
 
     def modify(self):
-        os.chdir( os.path.dirname(os.path.abspath(__file__)))
-        os.chdir(OUTPUT_DIR)
+        os.chdir(os.path.dirname(os.path.abspath(__file__)) + OUTPUT_DIR)
+        
+
         hf = h5py.File(self.currentName + H5, 'r+')
         arch = json.loads(hf.attrs.get("model_config"))
-
+        #print(self.currentName)
         all = []
         hf.visit(all.append)
 

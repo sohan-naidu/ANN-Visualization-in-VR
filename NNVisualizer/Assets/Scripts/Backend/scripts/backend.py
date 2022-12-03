@@ -18,7 +18,7 @@ class Backend:
 
         elif(vars(args)['i']):
             Initialize().initialize()
-            for _ in range(11):
+            for _ in range(5):
                 curname = "epoch_" + str(currentEpoch)
                 trainer = Train()
                 trainer.train(curname)
@@ -35,13 +35,13 @@ class Backend:
                 Neurons(args.op, args.x, args.y, curname).modify()
             else:
                 Layers(args.op, args.x, args.y, curname).modify()
-            for i in range(11):
+            for i in range(5):
                 curname = "epoch_" + str(currentEpoch)
                 trainer = Train()
                 if(i == 0):
-                    trainer.train(curname, True)
+                    trainer.train(curname, init = False, cur = True)
                 else:
-                    trainer.train(curname)
+                    trainer.train(curname, init = False)
                 currentEpoch += 5
 
 

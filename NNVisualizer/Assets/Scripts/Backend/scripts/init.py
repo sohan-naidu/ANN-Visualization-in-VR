@@ -37,12 +37,12 @@ class Initialize:
         model.compile(loss='mean_squared_error', optimizer='adam')
 
         #history = self.model.fit(self.x_train, self.y_train, epochs = 5, verbose = 2, shuffle = True)
-        os.chdir(OUTPUT_DIR)
+        os.chdir(os.path.dirname(os.path.abspath(__file__)) + OUTPUT_DIR)
         model.save("initial" + H5, include_optimizer = True)
         #model.save("epoch_0" + H5)
         #models.save_model(model, "epoch_0" + H5, include_optimizer=True)
         #cto("initial").convert()
-        os.chdir(EPOCHS_DIR)
+        os.chdir(os.path.dirname(os.path.abspath(__file__)) + EPOCHS_DIR)
         with open('metrics.json', 'w') as f:
             #json.dump({"metrics" : []}, f, indent = 4)
             json.dump([], f, indent = 4)
