@@ -33,8 +33,8 @@ class Initialize:
         model.add(Dense(units = 1, kernel_initializer = 'random_normal', activation = 'tanh'))
 
         # Change based on regression/classification
-        model.compile(loss='binary_crossentropy', optimizer='adam')
-        # model.compile(loss='mean_squared_error', optimizer='adam')
+        # model.compile(loss='binary_crossentropy', optimizer='adam')
+        model.compile(loss='mean_squared_error', optimizer='adam')
 
         #history = self.model.fit(self.x_train, self.y_train, epochs = 5, verbose = 2, shuffle = True)
         os.chdir(OUTPUT_DIR)

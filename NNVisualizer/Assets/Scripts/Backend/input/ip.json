@@ -1,1 +1,1 @@
-{"datasetPath":"C:\\My_Files\\Uni\\Capstone\\Implementation\\NNVisualizer\\Assets\\Scripts\\Backend\\input/dataset.csv","targets":["t"],"layerCount":2,"neuronsCount":[11,12]}
+{"datasetPath":"C:\\My_Files\\Uni\\Capstone\\Implementation\\NNVisualizer\\Assets\\Scripts\\Backend\\input/dataset.csv","targets":["price"],"layerCount":2,"neuronsCount":[11,12]}

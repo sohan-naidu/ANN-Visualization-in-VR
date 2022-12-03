@@ -18,7 +18,7 @@ class Backend:
 
         elif(vars(args)['i']):
             Initialize().initialize()
-            for _ in range(10):
+            for _ in range(11):
                 curname = "epoch_" + str(currentEpoch)
                 trainer = Train()
                 trainer.train(curname)
