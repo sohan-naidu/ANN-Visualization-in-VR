@@ -4,7 +4,7 @@ using Leap.Unity.Interaction;
 
 public class UpdateText : MonoBehaviour {
 
-    public TMP_Text text;
+    private TMP_Text text;
     [SerializeField]
     private InteractionSlider slider;
     private int currentValue;
@@ -23,10 +23,12 @@ public class UpdateText : MonoBehaviour {
 
     public void updateValue()
     {
-        Debug.Log(slider.horizontalStepValue);
-        if (currentValue != slider.horizontalStepValue) {
+        int value = (int)slider.horizontalStepValue + 1;
+        Debug.Log(value);
+
+        if (currentValue != value) {
             toUpdate = true;
-            currentValue = slider.horizontalStepValue;
+            currentValue = value;
         }
     }
 

@@ -15,7 +15,7 @@ public class LMCInteraction : InteractionHand {
 
     protected override void Start()
     {
-        // leapProvider.OnFixedFrame -= customFixedFrameUpdate;
+        leapProvider.OnFixedFrame -= customFixedFrameUpdate; //safeguard against double-subscription
         leapProvider.OnFixedFrame += customFixedFrameUpdate;
         base.Start();
     }
@@ -25,8 +25,9 @@ public class LMCInteraction : InteractionHand {
     {
         hand = handAccessorFunc(frame);
 
+
         if (hand != null) {
-            // Debug.Log("Hand ID: " + hand.Id);
+            // Debug.Log("Interaction Hand ID: " + hand.Id);
             // Debug.Log("Hand ID from Accessor: " + handAccessorFunc(frame).Id);
             // Debug.Log(( _hand.IsLeft ? "Left" : "Right" ) + "Hand deteced");
             if (headTransform == null) { headTransform = Camera.main.transform; }
@@ -51,6 +52,7 @@ public class LMCInteraction : InteractionHand {
             float projectionAmount = 1f + ( projectionDistance * projectionScale );
             hand.SetTransform(shoulderPos + shoulderToHand * projectionAmount,
                               hand.Rotation);
+            // Debug.Log("Interaction: " + ( shoulderPos + shoulderToHand * projectionAmount ).ToString());
             // Debug.Log("Interaction Hand : " + _hand);
 
         }
