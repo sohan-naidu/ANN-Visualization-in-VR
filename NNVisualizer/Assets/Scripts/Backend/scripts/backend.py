@@ -21,7 +21,7 @@ class Backend:
             for _ in range(5):
                 curname = "epoch_" + str(currentEpoch)
                 trainer = Train()
-                trainer.train(curname)
+                trainer.train(curname, init = True, cur = False)
                 currentEpoch += 5
         else:
             parser.add_argument('op', type = str, help = 'Operation that needs to be done in backend.')
@@ -41,7 +41,7 @@ class Backend:
                 if(i == 0):
                     trainer.train(curname, init = False, cur = True)
                 else:
-                    trainer.train(curname, init = False)
+                    trainer.train(curname, init = False, cur = False)
                 currentEpoch += 5
 
 

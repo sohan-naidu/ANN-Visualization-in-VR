@@ -23,7 +23,6 @@ class Initialize:
         inputDim = columnCount - targetCount
         if(layerCount == 1):
             raise ValueError("Can't have a single layer.")
-            
         model = Sequential()
         for layer in range(layerCount):
             if(layer == 0):

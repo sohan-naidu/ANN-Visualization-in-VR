@@ -99,6 +99,7 @@ class Layers():
             hf.close()
 
         else:
+            #print(layerGroups)
             for i in range(self.x, len(layerGroups)):
                 if(i == self.x):
                     prev = np.array(hf[layerGroups[i - 1][2]]).shape[0] # Previous layer no of neurons
@@ -295,7 +296,8 @@ class Layers():
                 del hf[optimizerWeights][optimizer][layers[i]]
 
             del hf[optimizerWeights][optimizer][layers[self.x]]
-
+            #print(optimizerGroups)
+            #print(optimizerData)
             for i in range(self.x, len(optimizerGroups)):
                 hf.create_group(optimizerGroups[i][0])
                 hf.create_group(optimizerGroups[i][1])
@@ -303,8 +305,8 @@ class Layers():
                 if(i == self.x):
                     hf.create_dataset(optimizerGroups[i][2], data = np.random.rand(optimizerData[1]))    # Bias m:0
                     hf.create_dataset(optimizerGroups[i][3], data = np.random.rand(optimizerData[1]))    # Bias v:0
-                    hf.create_dataset(optimizerGroups[i][5], data = np.random.rand(optimizerData[1], optimizerData[0]))   # Kernel m:0
-                    hf.create_dataset(optimizerGroups[i][6], data = np.random.rand(optimizerData[1], optimizerData[0]))   # Kernel m:0
+                    hf.create_dataset(optimizerGroups[i][5], data = np.random.rand(optimizerData[0], optimizerData[1]))   # Kernel m:0
+                    hf.create_dataset(optimizerGroups[i][6], data = np.random.rand(optimizerData[0], optimizerData[1]))   # Kernel v:0
                 else:
                     hf.create_dataset(optimizerGroups[i][2], data = saved[i - self.x][0])
                     hf.create_dataset(optimizerGroups[i][3], data = saved[i - self.x][1])
@@ -314,10 +316,16 @@ class Layers():
             arr = list(hf[optimizerWeights].attrs.__getitem__("weight_names"))
             #layer_names = list(hf[model_weights].attrs.__getitem__('layer_names'))
 
-
-            name = layers[0] + "_" + str(len(layers))
-            for i in range(len(arr)):
+            #print(arr)
+            name = layers[0] + "_" + str(len(layers) - 1)
+            #print(arr)
+            #print("name " + name)
+            '''for i in range(len(arr)):
                 if(name in arr[i]):
                     del arr[i]
+                    print(arr[i])'''
+            arr = [arr[i] for i in range(len(arr)) if name not in arr[i]]
+            #print(arr)
 
             hf[optimizerWeights].attrs.__setitem__("weight_names", arr)
+            

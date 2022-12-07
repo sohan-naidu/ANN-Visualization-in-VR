@@ -12,3 +12,7 @@ class Reset:
         files = glob.glob("*")
         for file in files:
             os.remove(file)
+
+
+
+
