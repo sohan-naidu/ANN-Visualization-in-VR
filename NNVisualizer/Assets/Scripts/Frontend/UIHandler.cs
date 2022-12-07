@@ -162,14 +162,14 @@ public class UIHandler : MonoBehaviour {
 
         Debug.Log("Sohan's part called\nCmd: " + p.StartInfo.FileName + " " + fileName + " " + cmd);
 
-        p.StartInfo.RedirectStandardError = true;
+        //p.StartInfo.RedirectStandardError = true;
         p.Start();
 
-        string stringErrorOutput = p.StandardError.ReadToEnd();
-        Debug.Log(stringErrorOutput);
+        //string stringErrorOutput = p.StandardError.ReadToEnd();
+        //Debug.Log(stringErrorOutput);
 
         //Make it synchronous
-        p.WaitForExit();
+        //p.WaitForExit();
     }
 
     public void callUpdate()
@@ -193,7 +193,7 @@ public class UIHandler : MonoBehaviour {
                 args = string.Format("del {0} {1} {2}", layer - 1, neuronPosition, currentEpoch);
                 break;
             case ButtonType.DeleteLayer:
-                args = string.Format("delL {0} {1}", layer - 1, currentEpoch);
+                args = string.Format("delL {0} 0 {1}", layer - 1, currentEpoch);
                 break;
             default:
                 Debug.LogError("Illegal button type");
