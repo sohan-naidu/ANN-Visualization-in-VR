@@ -368,12 +368,12 @@ public class NeuronInstantiator : MonoBehaviour {
         if (elapsedTime >= 10.0f) {
             //elapsedTime = 0;
             if (!testDone) {
-                GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
+                //GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
                 testDone = true;
             }
             if (elapsedTime >= 25.0f) {
                 if (!testDone2) {
-                    GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
+                    //GameObject.Find("UI").GetComponent<UIHandler>().callUpdate();
                     testDone2 = true;
                 }
             }
