@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 {"datasetPath":"C:\\My_Files\\Uni\\Capstone\\Implementation\\NNVisualizer\\Assets\\Scripts\\Backend\\input/dataset.csv","targets":["price"],"layerCount":2,"neuronsCount":[5,7]}
+=======
+<<<<<<< HEAD
+{"datasetPath":"D:\\Unity\\UnityProjects\\Review 1\\Assets\\Scripts\\Capstone\\NNVisualizer\\Assets\\Scripts\\Backend\\input/dataset.csv","targets":["price"],"layerCount":2,"neuronsCount":[11, 12]}
+=======
+{"datasetPath":"C:\\My_Files\\Uni\\Capstone\\Implementation\\NNVisualizer\\Assets\\Scripts\\Backend\\input/dataset.csv","targets":["price"],"layerCount":2,"neuronsCount":[11,12]}
+>>>>>>> a1dec6330ce81176ce37c4d6347f9a0ddf855f0d
+>>>>>>> d2f885481b742718c7cd6f89593ef7efb9ea1d87
