@@ -1,9 +1,4 @@
-import h5py
-import json
-import numpy as np
-import copy
-import os
-from globals import OUTPUT_DIR, H5
+
 
 class Layers():
     def __init__(self, op, x, y, curname):

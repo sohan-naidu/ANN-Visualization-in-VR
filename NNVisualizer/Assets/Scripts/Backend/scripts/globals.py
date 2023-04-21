@@ -1,6 +1,0 @@
-EPOCHS_DIR = "/../epochs/"
-OUTPUT_DIR = "/../output/"
-INPUT_DIR = "/../input/"
-JSON = "ip.json"
-H5 = ".h5"
-ONNX = ".onnx"

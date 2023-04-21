@@ -8,6 +8,7 @@ from globals import *
 from keras import models
 
 class Initialize:
+
     def initialize(self):
         os.chdir( os.path.dirname(os.path.abspath(__file__)) + INPUT_DIR)
         data = json.loads(open(JSON, "r").read())
